@@ -20,10 +20,10 @@
             id="floatingSelect"
             aria-label="Floating label select example"
           >
-            <option value="usuario" selected>Usuario</option>
-            <option value="nombre">Nombre</option>
+            <option value="Cliente" selected>Nombre</option>
             <option value="identificacion">Identificacion</option>
-            <option value="rol">Rol</option>
+            <option value="rol">Telefono</option>
+            <option value="nombre">Email</option>
           </select>
           <label for="floatingSelect">Filtrar Por:</label>
         </div>
@@ -31,7 +31,7 @@
     </div>
     <div class="toggle-crear my-3">
       <button class="btn btn-primary" @click="toggleCreate">
-        <i class="fas fa-plus me-2"></i>Añadir Usuario
+        <i class="fas fa-plus me-2"></i>Añadir Cliente
       </button>
     </div>
     <div class="gap mt-3"></div>
@@ -41,9 +41,9 @@
       @submit.prevent=""
       v-if="showCreate"
     >
-      <h2>Crear Usuario</h2>
+      <h2>Crear Cliente</h2>
       <div class="row">
-        <div class="col col-lg-4">
+        <div class="col col-lg-3">
           <div class="form-floating">
             <input
               type="text"
@@ -52,19 +52,57 @@
               id="name"
               placeholder="Nombre"
             />
-            <label for="buscar">Nombre</label>
+            <label for="name">Nombre</label>
           </div>
         </div>
-        <div class="col col-lg-4">
+        <div class="col col-lg-3">
           <div class="form-floating">
             <input
               type="text"
-              name="user"
+              name="identificacion"
               class="form-control"
-              id="user"
-              placeholder="Usuario"
+              id="identificacion"
+              placeholder="Identificacion"
             />
-            <label for="buscar">Usuario</label>
+            <label for="identificacion">Identificacion</label>
+          </div>
+        </div>
+        <div class="col col-lg-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              name="telefono"
+              class="form-control"
+              id="telefono"
+              placeholder="Telefono"
+            />
+            <label for="telefono">Telefono</label>
+          </div>
+        </div>
+        <div class="col col-lg-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              name="email"
+              class="form-control"
+              id="email"
+              placeholder="Email"
+            />
+            <label for="email">Email</label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col col-lg-4">
+          <div class="form-floating">
+            <input
+              type="direccion"
+              name="direccion"
+              class="form-control"
+              id="direccion"
+              placeholder="Direccion"
+            />
+            <label for="direccion">Direccion</label>
           </div>
         </div>
         <div class="col col-lg-4">
@@ -74,41 +112,16 @@
               id="floatingSelect"
               aria-label="Floating label select example"
             >
-              <option value="empleado" selected>Empleado Comun</option>
-              <option value="administrator">Administrador</option>
+              <option value="empleado" selected>Persona</option>
+              <option value="administrator">Empresa</option>
             </select>
-            <label for="floatingSelect">Rol</label>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-3">
-        <div class="col col-lg-4">
-          <div class="form-floating">
-            <input
-              type="password"
-              name="password"
-              class="form-control"
-              id="name"
-              placeholder="Contraseña"
-            />
-            <label for="buscar">Contraseña</label>
-          </div>
-        </div>
-        <div class="col col-lg-4">
-          <div class="form-floating">
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              placeholder="Confirmar contraseña"
-            />
-            <label for="buscar">Confirmar contraseña</label>
+            <label for="floatingSelect">Tipo</label>
           </div>
         </div>
         <div class="col col-lg-4 align-self-center">
           <button
             class="btn btn-primary pe-4 px-4 pt-2 pb-2"
-            @click="createUser"
+            @click="createClient"
           >
             Crear
           </button>
@@ -124,7 +137,7 @@
         <h4>Nombre</h4>
       </div>
       <div class="col col-lg-3">
-        <h4>Usuario</h4>
+        <h4>Cliente</h4>
       </div>
       <div class="col col-lg-3">
         <h4>Rol</h4>
@@ -135,18 +148,18 @@
     </div>
     <div class="gap"></div>
     <div
-      class="row t-users border-bottom shadow-sm my-3 rounded"
-      v-for="user in users"
-      :key="user.name"
+      class="row t-clients border-bottom shadow-sm my-3 rounded"
+      v-for="client in clients"
+      :key="client.name"
     >
       <div class="col col-lg-4 align-self-center">
-        <h5>{{ user.name }}</h5>
+        <h5>{{ client.name }}</h5>
       </div>
       <div class="col col-lg-3 align-self-center">
-        <h5>{{ user.user }}</h5>
+        <h5>{{ client.client }}</h5>
       </div>
       <div class="col col-lg-3 align-self-center">
-        <h5>{{ user.role }}</h5>
+        <h5>{{ client.role }}</h5>
       </div>
       <div class="col col-lg-2 pb-1">
         <span class="me-5"
@@ -156,7 +169,7 @@
             data-bs-target="#exampleModal"
           ></i></span
         ><span
-          ><i class="far fa-trash-alt fs-3 text-danger" @click="deleteUser"></i
+          ><i class="far fa-trash-alt fs-3 text-danger" @click="deleteClient"></i
         ></span>
       </div>
     </div>
@@ -171,7 +184,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Editar Cliente</h5>
             <button
               type="button"
               class="btn-close"
@@ -197,12 +210,12 @@
                 <div class="form-floating">
                   <input
                     type="text"
-                    name="user"
+                    name="client"
                     class="form-control"
-                    id="user"
-                    placeholder="Usuario"
+                    id="client"
+                    placeholder="Cliente"
                   />
-                  <label for="buscar">Usuario</label>
+                  <label for="buscar">Cliente</label>
                 </div>
               </div>
             </div>
@@ -279,61 +292,61 @@
 import { ref } from "vue";
 import Swal from "sweetalert2";
 export default {
-  name: "Users",
+  name: "clients",
   components: {},
   setup() {
     const allowChangePassword = ref(false);
     const showCreate = ref(false);
-    const users = ref([
+    const clients = ref([
       {
         name: "Samuel Martinez",
-        user: "Sammy1301",
+        client: "Sammy1301",
         role: "Administrador",
       },
       {
         name: "Mariana Rodriguez",
-        user: "mariRdz30",
+        client: "mariRdz30",
         role: "Administrador",
       },
     ]);
     const toggleCreate = () => {
       showCreate.value = !showCreate.value;
     };
-    const createUser = () => {
+    const createClient = () => {
       Swal.fire({
         title: "Hurra!!",
-        text: "Usuario creado",
+        text: "Cliente creado",
         icon: "success",
       });
     };
-    const updateUser = () => {
+    const updateClient = () => {
       Swal.fire({
         title: "Hurra!!",
-        text: "Usuario Actualizado",
+        text: "Cliente Actualizado",
         icon: "success",
       });
     };
-    const deleteUser = () => {
+    const deleteClient = () => {
       Swal.fire({
-        title: "¿Eliminar usuario?",
+        title: "¿Eliminar Cliente?",
         text: "Esta accion no se puede deshacer",
         icon: "warning",
         showCancelButton: true,
       }).then((result) => {
         if (!result.isDismissed) {
-          alert("Usuario Eliminado");
+          alert("Cliente Eliminado");
         }
       });
     };
-    const searchUser = () => {};
+    const searchClient = () => {};
     return {
       showCreate,
       toggleCreate,
-      users,
-      deleteUser,
-      updateUser,
-      createUser,
-      searchUser,
+      clients,
+      deleteClient,
+      updateClient,
+      createClient,
+      searchClient,
       allowChangePassword,
     };
   },
@@ -346,7 +359,7 @@ export default {
 span > i {
   cursor: pointer;
 }
-.t-users{
+.t-clients{
   background-color: rgba(218, 218, 218, 0.76);
 }
 h5, h4{
