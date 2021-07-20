@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+  <h2 class="text-muted my-4"><i class="fas fa-users-cog me-2"></i>Usuarios</h2>
     <div class="gap mt-3"></div>
     <div class="row">
       <div class="col col-lg-6 mb-1">
@@ -88,7 +89,7 @@
               type="password"
               name="password"
               class="form-control"
-              id="name"
+              id="password"
               placeholder="Contraseña"
             />
             <label for="buscar">Contraseña</label>
@@ -99,7 +100,7 @@
             <input
               type="password"
               class="form-control"
-              id="password"
+              id="confirm_password"
               placeholder="Confirmar contraseña"
             />
             <label for="buscar">Confirmar contraseña</label>
@@ -110,7 +111,7 @@
             class="btn btn-primary pe-4 px-4 pt-2 pb-2"
             @click="createUser"
           >
-            Crear
+            <i class="fas fa-save me-2 fs-5"></i>Crear
           </button>
         </div>
       </div>
@@ -346,10 +347,11 @@ export default {
 span > i {
   cursor: pointer;
 }
-.t-users{
+.t-users {
   background-color: rgba(218, 218, 218, 0.76);
 }
-h5, h4{
+h5,
+h4 {
   margin-bottom: 0;
 }
 </style>

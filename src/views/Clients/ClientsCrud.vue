@@ -1,12 +1,6 @@
 <template>
-    <div class="row">
-    <div class="col col-lg-2">
         <SideBar />
-    </div>
-    <div class="col col-lg-10">
-    <Clients />
-    </div>
-    </div>
+        <Clients />
 </template>
 
 <script>

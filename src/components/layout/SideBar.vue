@@ -1,151 +1,112 @@
 <template>
-  <div class="side-bar">
-    <nav>
-      <div class="boton dropdown">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand text-primary m-lg-2" href="#">Talleres Lebron</a>
         <button
-          class="dropdown-toggle"
-          id="dropdownMenuLink"
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
           aria-expanded="false"
-          data-bs-toggle="dropdown"
+          aria-label="Toggle navigation"
         >
-          <i class="fas fa-shopping-cart"></i><span>Facturacion</span>
+          <span class="navbar-toggler-icon"></span>
         </button>
-        <ul
-          class="dropdown-menu"
-          style="z-index=99"
-          aria-labelledby="dropdownMenuLink"
-        >
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
-      </div>
-      <div class="boton dropdown">
-        <button
-          class="dropdown-toggle"
-          id="dropdownMenuLink"
-          aria-expanded="false"
-          data-bs-toggle="dropdown"
-        >
-          <i class="fas fa-dolly-flatbed"></i><span>Inventario</span>
-        </button>
-        <ul
-          class="dropdown-menu"
-          style="z-index=99"
-          aria-labelledby="dropdownMenuLink"
-        >
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
-      </div>
-      <div class="boton dropdown">
-        <button
-          class="dropdown-toggle"
-          id="dropdownMenuLink"
-          aria-expanded="false"
-          data-bs-toggle="dropdown"
-        >
-          <i class="fas fa-user-friends"></i><span>Personas</span>
-        </button>
-        <ul
-          class="dropdown-menu"
-          style="z-index=99"
-          aria-labelledby="dropdownMenuLink"
-        >
-          <li><router-link class="dropdown-item" to="/clients">Clientes</router-link></li>
-          <li><router-link class="dropdown-item" to="/users">Usuarios</router-link></li>
-          <li><a class="dropdown-item" href="#">Empleados</a></li>
-        </ul>
-      </div>
-      <div class="boton dropdown">
-        <button
-          class="dropdown-toggle"
-          id="dropdownMenuLink"
-          aria-expanded="false"
-          data-bs-toggle="dropdown"
-        >
-          <i class="fas fa-file-invoice-dollar"></i><span>Cuentas</span>
-        </button>
-        <ul
-          class="dropdown-menu"
-          style="z-index=99"
-          aria-labelledby="dropdownMenuLink"
-        >
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link m-lg-2 dropdown-toggle"
+                href="#"
+                id="facturacion"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Facturacion
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="facturacion">
+                <li><a class="dropdown-item" href="#">Facturacion</a></li>
+                <li><a class="dropdown-item" href="#">Consulta</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Cuadre</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link m-lg-2 dropdown-toggle"
+                href="#"
+                id="inventario"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Inventario
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="inventario">
+                <li><router-link to="/pieces" class="dropdown-item">Piezas</router-link></li>
+                <li><router-link to="/services" class="dropdown-item">Servicios</router-link></li>
+                <li>
+                  <a class="dropdown-item">Proveedores</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link m-lg-2 dropdown-toggle"
+                href="#"
+                id="personas"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Personas
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="personas">
+                <li><router-link to="/clients" class="dropdown-item">Clientes</router-link></li>
+                <li><router-link to="/users" class="dropdown-item">Usuarios</router-link></li>
+                <li>
+                  <a class="dropdown-item" href="#">Empleados</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link disabled"
+                href="#"
+                tabindex="-1"
+                aria-disabled="true"
+                >Disabled</a
+              >
+            </li>
+          </ul>
+          <form class="d-flex">
+            <h5 class="m-2">Samuel Martinez</h5>
+            <button class="btn btn-outline-danger" type="submit">
+              <i class="fas fa-power-off me-2"></i>Salir
+            </button>
+          </form>
+        </div>
       </div>
     </nav>
-  </div>
 </template>
 <script>
+// import DropDown from "../layout/DropDown.vue";
 export default {
+  components: {
+    // DropDown
+  },
   setup() {},
 };
 </script>
 <style scoped>
-body {
-  overflow: hidden;
+nav{
+  background-color: #E8E9F3;
 }
-.side-bar {
-  background-color: #7879f1;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-  position: fixed;
-  left: 0;
-  top: 0;
-}
-i {
-  font-size: 2rem;
-  padding-top: 5px;
-}
-nav {
-  width: 100%;
-  color: #fff;
-}
-.boton {
-  background-color: #7879f1;
-  height: 70px;
-  width: 100%;
-  color: #fff;
-  margin-bottom: 5px;
-  position: relative;
-}
+li{
 
-button {
-  background: none;
-  border: hidden;
-  width: 100%;
-  height: 100%;
-  color: #fff;
-  transition: all 0.5s ease;
-  padding-bottom: 5px;
-}
-button:hover {
-  background-color: #5858ac;
-}
-span {
-  padding: 15px;
-  font-size: 1.13rem;
-}
-ul li {
-  padding: 5px;
-}
-
-.sub-facturacion {
-  position: absolute;
-  background: #7879f1;
-  z-index: 1;
-  width: 100%;
-  margin: 0;
-  right: -100%;
-  top: 20px;
-  display: none;
+  transition: ease 0.5s all;
 }
 </style>
