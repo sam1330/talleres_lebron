@@ -269,7 +269,7 @@
                 </div>
               </div>
             </form>
-            <!-- FIN FORM EDIT -->
+            <!-- FIN FORM EDITAR -->
           </div>
           <div class="modal-footer">
             <button
