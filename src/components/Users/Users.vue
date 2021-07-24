@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-  <h2 class="text-muted my-4"><i class="fas fa-users-cog me-2"></i>Usuarios</h2>
+    <h2 class="text-muted my-4">
+      <i class="fas fa-users-cog me-2"></i>Usuarios
+    </h2>
     <div class="gap mt-3"></div>
     <div class="row">
       <div class="col col-lg-6 mb-1">
@@ -36,10 +38,10 @@
       </button>
     </div>
     <div class="gap mt-3"></div>
+    <!-- ----------------------------------INICIO FORM CREAR------------------------------------------------------- -->
     <form
       class="border p-2 rounded shadow-sm"
-      action=""
-      @submit.prevent=""
+      @submit.prevent="createUser"
       v-if="showCreate"
     >
       <h2>Crear Usuario</h2>
@@ -47,27 +49,30 @@
         <div class="col col-lg-4">
           <div class="form-floating">
             <input
-              type="text"
-              name="name"
+              type="number"
+              name="id_empleado"
               class="form-control"
-              id="name"
-              placeholder="Nombre"
+              id="id_empleado"
+              placeholder="ID Empleado"
+              required
             />
-            <label for="buscar">Nombre</label>
+            <label for="id_empleado">ID Empleado</label>
           </div>
         </div>
         <div class="col col-lg-4">
           <div class="form-floating">
             <input
               type="text"
-              name="user"
+              name="usuario"
               class="form-control"
               id="user"
               placeholder="Usuario"
+              required
             />
-            <label for="buscar">Usuario</label>
+            <label for="user">Usuario</label>
           </div>
         </div>
+        
         <div class="col col-lg-4">
           <div class="form-floating">
             <select
@@ -87,12 +92,13 @@
           <div class="form-floating">
             <input
               type="password"
-              name="password"
+              name="pass"
               class="form-control"
               id="password"
               placeholder="Contraseña"
+              required
             />
-            <label for="buscar">Contraseña</label>
+            <label for="password">Contraseña</label>
           </div>
         </div>
         <div class="col col-lg-4">
@@ -102,11 +108,14 @@
               class="form-control"
               id="confirm_password"
               placeholder="Confirmar contraseña"
+              required
             />
-            <label for="buscar">Confirmar contraseña</label>
+            <label for="confirm_password">Confirmar contraseña</label>
           </div>
         </div>
+         
         <div class="col col-lg-4 align-self-center">
+         
           <button
             class="btn btn-primary pe-4 px-4 pt-2 pb-2"
             @click="createUser"
@@ -116,22 +125,19 @@
         </div>
       </div>
     </form>
-
+    <!-- ------------------------------------FINAL FORM------------------------------------------------------------- -->
     <div
       id="t-header"
       class="row border-bottom shadow-sm mt-5 mb-4 rounded p-1"
     >
       <div class="col col-lg-4">
-        <h4>Nombre</h4>
+        <h4>ID Empleado</h4>
       </div>
       <div class="col col-lg-3">
         <h4>Usuario</h4>
       </div>
       <div class="col col-lg-3">
         <h4>Rol</h4>
-      </div>
-      <div class="col col-lg-2">
-        <h4>Acciones</h4>
       </div>
     </div>
     <div class="gap"></div>
@@ -141,15 +147,15 @@
       :key="user.name"
     >
       <div class="col col-lg-4 align-self-center">
-        <h5>{{ user.name }}</h5>
+        <h5>{{ user.id }}</h5>
       </div>
       <div class="col col-lg-3 align-self-center">
         <h5>{{ user.user }}</h5>
       </div>
       <div class="col col-lg-3 align-self-center">
-        <h5>{{ user.role }}</h5>
+        <h5>{{ user.roles }}</h5>
       </div>
-      <div class="col col-lg-2 pb-1">
+      <div class="col col-lg- 2 pb-1">
         <span class="me-5"
           ><i
             class="far fa-edit fs-3 text-info"
@@ -181,85 +187,89 @@
             ></button>
           </div>
           <div class="modal-body">
-            <div class="row">
-              <div class="col col-lg-6">
-                <div class="form-floating">
-                  <input
-                    type="text"
-                    name="name"
-                    class="form-control"
-                    id="name"
-                    placeholder="Nombre"
-                  />
-                  <label for="buscar">Nombre</label>
+            <!------------------------------------- INICIO FORM EDIT ----------------------------------->
+            <form>
+              <div class="row">
+                <div class="col col-lg-6">
+                  <div class="form-floating">
+                    <input
+                      type="number"
+                      name="id_empleado"
+                      class="form-control"
+                      id="id_empleado"
+                      placeholder="Nombre"
+                    />
+                    <label for="id_empleado">Nombre</label>
+                  </div>
+                </div>
+                <div class="col col-lg-6">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      name="user"
+                      class="form-control"
+                      id="user"
+                      placeholder="Usuario"
+                    />
+                    <label for="user">Usuario</label>
+                  </div>
                 </div>
               </div>
-              <div class="col col-lg-6">
-                <div class="form-floating">
-                  <input
-                    type="text"
-                    name="user"
-                    class="form-control"
-                    id="user"
-                    placeholder="Usuario"
-                  />
-                  <label for="buscar">Usuario</label>
+              <div class="row mt-3">
+                <div class="col col-lg-5">
+                  <div class="form-floating">
+                    <select
+                      class="form-select"
+                      id="floatingSelect"
+                      aria-label="Floating label select example"
+                    >
+                      <option value="empleado" selected>Empleado Comun</option>
+                      <option value="administrator">Administrador</option>
+                    </select>
+                    <label for="floatingSelect">Rol</label>
+                  </div>
+                </div>
+                <div class="col col-lg-5 align-self-end">
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      @click="allowChangePassword = !allowChangePassword"
+                      v-model="allowChangePassword"
+                    />
+                    <label class="form-check-label" for="flexSwitchCheckDefault"
+                      >Cambiar contraseña</label
+                    >
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col col-lg-5">
-                <div class="form-floating">
-                  <select
-                    class="form-select"
-                    id="floatingSelect"
-                    aria-label="Floating label select example"
-                  >
-                    <option value="empleado" selected>Empleado Comun</option>
-                    <option value="administrator">Administrador</option>
-                  </select>
-                  <label for="floatingSelect">Rol</label>
+              <div class="row mt-3" v-if="allowChangePassword">
+                <div class="col col-lg-5">
+                  <div class="form-floating">
+                    <input
+                      type="password"
+                      name="password"
+                      class="form-control"
+                      id="password"
+                      placeholder="Contraseña"
+                    />
+                    <label for="buscar">Contraseña</label>
+                  </div>
+                </div>
+                <div class="col col-lg-5">
+                  <div class="form-floating">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="c_password"
+                      placeholder="Confirmar contraseña"
+                    />
+                    <label for="buscar">Confirmar contraseña</label>
+                  </div>
                 </div>
               </div>
-              <div class="col col-lg-5 align-self-end">
-                <div class="form-check form-switch">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    @click="allowChangePassword = !allowChangePassword"
-                    v-model="allowChangePassword"
-                  />
-                  <label class="form-check-label" for="flexSwitchCheckDefault"
-                    >Cambiar contraseña</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="row mt-3" v-if="allowChangePassword">
-              <div class="col col-lg-5">
-                <div class="form-floating">
-                  <input
-                    type="password"
-                    name="password"
-                    class="form-control"
-                    id="password"
-                    placeholder="Contraseña"
-                  />
-                  <label for="buscar">Contraseña</label>
-                </div>
-              </div>
-              <div class="col col-lg-5">
-                <div class="form-floating">
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="c_password"
-                    placeholder="Confirmar contraseña"
-                  />
-                  <label for="buscar">Confirmar contraseña</label>
-                </div>
-              </div>
-            </div>
+            </form>
+            <!-- FIN FORM EDITAR -->
           </div>
           <div class="modal-footer">
             <button
@@ -287,12 +297,12 @@ export default {
     const showCreate = ref(false);
     const users = ref([
       {
-        name: "Samuel Martinez",
+        id: "Samuel Martinez",
         user: "Sammy1301",
         role: "Administrador",
       },
       {
-        name: "Mariana Rodriguez",
+        id: "Mariana Rodriguez",
         user: "mariRdz30",
         role: "Administrador",
       },
@@ -300,13 +310,7 @@ export default {
     const toggleCreate = () => {
       showCreate.value = !showCreate.value;
     };
-    const createUser = () => {
-      Swal.fire({
-        title: "Hurra!!",
-        text: "Usuario creado",
-        icon: "success",
-      });
-    };
+    const createUser = () => {};
     const updateUser = () => {
       Swal.fire({
         title: "Hurra!!",
