@@ -12,6 +12,8 @@
             class="form-control"
             id="buscar"
             placeholder="Buscar"
+            v-model="searchBox"
+            @input="searchUser()"
           />
           <label for="buscar">Buscar</label>
         </div>
@@ -20,12 +22,11 @@
         <div class="form-floating">
           <select
             class="form-select"
-            id="floatingSelect"
             aria-label="Floating label select example"
+            v-model="filterSelected"
           >
             <option value="usuario" selected>Usuario</option>
-            <option value="nombre">Nombre</option>
-            <option value="identificacion">Identificacion</option>
+            <option value="id_empleado">ID Empleado</option>
             <option value="rol">Rol</option>
           </select>
           <label for="floatingSelect">Filtrar Por:</label>
@@ -42,7 +43,7 @@
     <form
       class="border p-2 rounded shadow-sm"
       @submit.prevent="createUser"
-      v-if="showCreate"
+      v-show="showCreate"
     >
       <h2>Crear Usuario</h2>
       <div class="row">
@@ -77,7 +78,6 @@
           <div class="form-floating">
             <select
               class="form-select"
-              id="floatingSelect"
               aria-label="Floating label select example"
             >
               <option value="empleado" selected>Empleado Comun</option>
@@ -94,7 +94,6 @@
               type="password"
               name="pass"
               class="form-control"
-              id="password"
               placeholder="Contraseña"
               required
             />
@@ -106,7 +105,6 @@
             <input
               type="password"
               class="form-control"
-              id="confirm_password"
               placeholder="Confirmar contraseña"
               required
             />
@@ -143,17 +141,17 @@
     <div class="gap"></div>
     <div
       class="row t-users border-bottom shadow-sm my-3 rounded"
-      v-for="user in users"
-      :key="user.name"
+      v-for="(user, index) in users"
+      :key="index"
     >
       <div class="col col-lg-4 align-self-center">
-        <h5>{{ user.id }}</h5>
+        <h5>{{ user.id_empleado }}</h5>
       </div>
       <div class="col col-lg-3 align-self-center">
-        <h5>{{ user.user }}</h5>
+        <h5>{{ user.usuario }}</h5>
       </div>
       <div class="col col-lg-3 align-self-center">
-        <h5>{{ user.roles }}</h5>
+        <h5>{{ user.rol }}</h5>
       </div>
       <div class="col col-lg- 2 pb-1">
         <span class="me-5"
@@ -196,7 +194,6 @@
                       type="number"
                       name="id_empleado"
                       class="form-control"
-                      id="id_empleado"
                       placeholder="Nombre"
                     />
                     <label for="id_empleado">Nombre</label>
@@ -208,7 +205,6 @@
                       type="text"
                       name="user"
                       class="form-control"
-                      id="user"
                       placeholder="Usuario"
                     />
                     <label for="user">Usuario</label>
@@ -287,29 +283,24 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import Swal from "sweetalert2";
+import axios from "axios";
+import { baseUrl } from "../../model/main";
+
 export default {
   name: "Users",
   components: {},
   setup() {
     const allowChangePassword = ref(false);
     const showCreate = ref(false);
-    const users = ref([
-      {
-        id: "Samuel Martinez",
-        user: "Sammy1301",
-        role: "Administrador",
-      },
-      {
-        id: "Mariana Rodriguez",
-        user: "mariRdz30",
-        role: "Administrador",
-      },
-    ]);
+    const users = ref([]);
     const toggleCreate = () => {
       showCreate.value = !showCreate.value;
     };
+    const filterSelected = ref("usuario");
+    const searchBox = ref("");
+
     const createUser = () => {};
     const updateUser = () => {
       Swal.fire({
@@ -330,16 +321,42 @@ export default {
         }
       });
     };
-    const searchUser = () => {};
+    const fetchUsers = () => {
+      const queryUrl = `${baseUrl}crud/users/fetchUsers.php`;
+      axios
+        .get(queryUrl)
+        .then((res) => {
+          if (res.data) {
+            users.value = [];
+            res.data.forEach((element) => {
+              users.value.push(element);
+            });
+          }
+        })
+        .catch((e) => console.log(e));
+    };
+    const searchUser = () => {
+      const queryUrl = `${baseUrl}crud/users/searchUser.php?${filterSelected.value}=${searchBox.value}`;
+      axios.get(queryUrl).then((res) => {
+        users.value = res.data;
+      });
+    };
+
+    onMounted(() => {
+      fetchUsers();
+    });
     return {
+      allowChangePassword,
       showCreate,
-      toggleCreate,
+      searchBox,
       users,
+      filterSelected,
+      toggleCreate,
+      fetchUsers,
       deleteUser,
       updateUser,
       createUser,
       searchUser,
-      allowChangePassword,
     };
   },
 };

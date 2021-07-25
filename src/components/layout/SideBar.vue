@@ -68,7 +68,7 @@
                 <li><router-link to="/clients" class="dropdown-item">Clientes</router-link></li>
                 <li><router-link to="/users" class="dropdown-item">Usuarios</router-link></li>
                 <li>
-                  <a class="dropdown-item" href="#">Empleados</a>
+                  <router-link to="/employees" class="dropdown-item">Empleados</router-link>
                 </li>
               </ul>
             </li>
@@ -93,11 +93,7 @@
     </nav>
 </template>
 <script>
-// import DropDown from "../layout/DropDown.vue";
 export default {
-  components: {
-    // DropDown
-  },
   setup() {},
 };
 </script>
