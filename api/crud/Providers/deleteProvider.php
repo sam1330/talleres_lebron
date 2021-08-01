@@ -1,9 +1,9 @@
 <?php  include "../../main/conexion.php";
 
-    $id_usu = htmlentities($_GET['id_usu']);
+    $id = htmlentities($_GET['id']);
 
-    $query = $con->prepare("DELETE FROM usuarios WHERE id_usu=?");
-    $query->bind_param("i", $id_usu);
+    $query = $con->prepare("DELETE FROM proveedor WHERE id_prov=?");
+    $query->bind_param("i", $id);
 
     if ($query->execute()) {
         echo "success";
