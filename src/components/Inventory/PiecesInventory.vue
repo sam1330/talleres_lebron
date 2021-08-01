@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+      <h2 class="text-muted my-4">
+     <i class="fas fa-cogs me-2"></i>Repuesto
+    </h2>
+
     <div class="gap mt-3"></div>
     <div class="row">
       <div class="col col-lg-5 mb-1">
@@ -13,51 +17,10 @@
           <label for="buscar">Buscar</label>
         </div>
       </div>
-      <div class="col col-lg-3 mb-1">
-        <div class="form-floating">
-          <select
-            class="form-select"
-            id="floatingSelect"
-            aria-label="Floating label select example"
-            v-model="typeSelected"
-          >
-            <option value="pieza" selected>Pieza</option>
-            <option value="servicio">Servicio</option>
-          </select>
-          <label for="floatingSelect">Tipo:</label>
-        </div>
-      </div>
-      <div class="col col-lg-3 mb-1">
-        <div class="form-floating" v-if="typeSelected == 'pieza'">
-          <select
-            class="form-select"
-            id="floatingSelect"
-            aria-label="Floating label select example"
-          >
-            <option value="detalle" selected>Detalle</option>
-            <option value="marca">Marca de la pieza</option>
-            <option value="modelo">Marca del vehiculo</option>
-          </select>
-          <label for="floatingSelect">Filtrar Por:</label>
-        </div>
-        <div class="form-floating" v-if="typeSelected == 'servicio'">
-          <select
-            class="form-select"
-            id="floatingSelect"
-            aria-label="Floating label select example"
-          >
-            <option value="detalle" selected>Detalle</option>
-            <option value="dificultad">Dificultad</option>
-            <option value="tipo_vehiculo">Tipo de vehiculo</option>
-          </select>
-          <label for="floatingSelect">Filtrar Por:</label>
-        </div>
-      </div>
     </div>
-  </div>
   <div class="toggle-crear my-3">
     <button class="btn btn-primary" @click="toggleCreate">
-      <i class="fas fa-plus me-2"></i>Añadir Pieza
+      <i class="fas fa-plus me-2"></i>Añadir Repuesto
     </button>
   </div>
 
@@ -66,17 +29,32 @@
   <div class="gap mt-3"></div>
 
   <div id="t-header" class="row border-bottom shadow-sm mt-5 mb-4 rounded p-1">
-    <div class="col col-lg-4">
-      <h4>Nombre</h4>
-    </div>
-    <div class="col col-lg-3">
-      <h4>Inventario</h4>
-    </div>
-    <div class="col col-lg-3">
-      <h4>Rol</h4>
+    <div class="col col-lg-1">
+      <h4>Codigo</h4>
     </div>
     <div class="col col-lg-2">
-      <h4>Acciones</h4>
+      <h4>descripcion</h4>
+    </div>
+    <div class="col col-lg-2">
+      <h4>Existencia</h4>
+    </div>
+    <div class="col col-lg-1">
+      <h4>reorden</h4>
+    </div>
+    <div class="col col-lg-1">
+      <h4>codigo</h4>
+    </div>
+    <div class="col col-lg-2">
+      <h4>Proveedor</h4>
+    </div>
+     <div class="col col-lg-1">
+      <h4>Compra</h4>
+    </div>
+     <div class="col col-lg-1">
+      <h4>Venta</h4>
+    </div>
+    <div class="col col-lg-2">
+      <h4></h4>
     </div>
   </div>
   <div class="gap"></div>
@@ -131,48 +109,60 @@
               <div class="form-floating">
                 <input
                   type="text"
-                  name="detalle"
+                  name="descripcion"
                   class="form-control"
-                  id="detalle"
-                  placeholder="Detalle"
+                  id="descripcion"
+                  placeholder="Descripcion"
                 />
-                <label for="Detalle">Detalle</label>
+                <label for="decripcion">Descripcion</label>
               </div>
             </div>
             <div class="col col-lg-3">
               <div class="form-floating">
                 <input
                   type="text"
-                  name="fabricante"
+                  name="marca"
                   class="form-control"
-                  id="fabricante"
-                  placeholder="Fabricante"
+                  id="marca"
+                  placeholder="Marca"
                 />
-                <label for="fabricante">Fabricante</label>
+                <label for="marca">Marca</label>
+              </div>
+            </div>
+             <div class="col col-lg-2">
+              <div class="form-floating">
+                <input
+                  type="text"
+                  name="categoria"
+                  class="form-control"
+                  id="categoria"
+                  placeholder="Categoria"
+                />
+                <label for="categoria">Categoria</label>
               </div>
             </div>
             <div class="col col-lg-3">
               <div class="form-floating">
                 <input
                   type="number"
-                  name="buy_price"
+                  name="pre_com"
                   class="form-control"
-                  id="buy_price"
+                  id="pre_com"
                   placeholder="Precio Compra"
                 />
-                <label for="type">Precio Compra</label>
+                <label for="pre_com">Precio Compra</label>
               </div>
             </div>
             <div class="col col-lg-3">
               <div class="form-floating">
                 <input
                   type="number"
-                  name="sell_price"
+                  name="pre_ven"
                   class="form-control"
-                  id="sell_price"
+                  id="pre_ven"
                   placeholder="Precio Venta"
                 />
-                <label for="type">Precio Venta</label>
+                <label for="pre_ven">Precio Venta</label>
               </div>
             </div>
           </div>
@@ -181,9 +171,9 @@
               <div class="form-floating">
                 <input
                   type="number"
-                  name="existence"
+                  name="existencia"
                   class="form-control"
-                  id="existence"
+                  id="existencia"
                   placeholder="Existencia"
                 />
                 <label for="existence">Existencia</label>
@@ -212,8 +202,8 @@
                     Motor de arranque
                   </option>
                   <option value="alternator">alternador</option>
-                  <option value="alternator">Bujia</option>
-                  <option value="alternator">Bateria</option>
+                  <option value="bujia">Bujia</option>
+                  <option value="bateria">Bateria</option>
                 </select>
                 <label for="floatingSelect">Categoria</label>
               </div>
@@ -233,6 +223,8 @@
       </div>
     </div>
   </div>
+  </div>
+
 </template>
 <script>
 import { ref } from "vue";
