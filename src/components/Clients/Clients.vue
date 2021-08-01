@@ -152,22 +152,22 @@
       class="row border-bottom overflow-auto shadow-sm mt-5 mb-4 rounded p-1"
     >
       <div class="col col-lg-2">
-        <h4>Nombre</h4>
+        <h6>Nombre</h6>
       </div>
       <div class="col col-lg-2">
-        <h4>Identificacion</h4>
+        <h6>Identificacion</h6>
       </div>
       <div class="col col-lg-2">
-        <h4>telefono</h4>
+        <h6>telefono</h6>
       </div>
-      <div class="col col-lg-2">
-        <h4>Email</h4>
+      <div class="col col-lg-3">
+        <h6>Email</h6>
       </div>
       <div class="col col-lg-1">
-        <h4>Tipo</h4>
+        <h6>Tipo</h6>
       </div>
-      <div class="col col-lg-2">
-        <h4>Fecha Creacion</h4>
+      <div class="col col-lg-1">
+        <h6>Fecha Creacion</h6>
       </div>
     </div>
     <div class="gap"></div>
@@ -185,13 +185,13 @@
       <div class="col col-lg-2 align-self-center">
         {{ client.telefono }}
       </div>
-      <div class="col col-lg-2 overflow-auto align-self-center">
+      <div class="col col-lg-3 overflow-auto align-self-center">
         {{ client.email }}
       </div>
       <div class="col col-lg-1 align-self-center">
         {{ client.tipo }}
       </div>
-      <div class="col col-lg-2 align-self-center">
+      <div class="col col-lg-1 align-self-center">
         {{ client.fecha_creacion }}
       </div>
       <div class="col col-lg-1 pb-1">

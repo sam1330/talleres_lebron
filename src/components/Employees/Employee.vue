@@ -70,6 +70,20 @@
           <div class="form-floating">
             <input
               type="text"
+              name="apellido"
+              class="form-control"
+              id="apellido"
+              v-model="createForm.apellido"
+              placeholder="Apellido"
+              required
+            />
+            <label for="name">Apellido</label>
+          </div>
+        </div>
+        <div class="col col-lg-3">
+          <div class="form-floating">
+            <input
+              type="text"
               name="identificacion"
               class="form-control"
               id="identificacion"
@@ -94,21 +108,23 @@
             <label for="telefono">Telefono</label>
           </div>
         </div>
-        <div class="col col-lg-3">
-          <div class="form-floating">
-            <input
-              type="text"
-              name="email"
-              class="form-control"
-              id="email"
-              v-model="createForm.email"
-              placeholder="Email"
-            />
-            <label for="email">Email</label>
-          </div>
         </div>
-      </div>
-      <div class="row mt-3">
+        <div class="row mt-3">
+          <div class="col col-lg-3">
+            <div class="form-floating">
+              <input
+                type="text"
+                name="email"
+                class="form-control"
+                id="email"
+                v-model="createForm.email"
+                placeholder="Email"
+              />
+              <label for="email">Email</label>
+            </div>
+          </div>
+       
+
         <div class="col col-lg-4">
           <div class="form-floating">
             <input
@@ -122,29 +138,31 @@
             <label for="direccion">Direccion</label>
           </div>
         </div>
-        <div class="col col-lg-4">
+        <div class="col col-lg-3">
           <div class="form-floating">
             <select
-              name="tipo"
+              name="puesto"
               class="form-select"
               id="floatingSelect"
-              v-model="createForm.tipo"
+              v-model="createForm.puesto"
               aria-label="Floating label select example"
             >
-              <option value="persona" selected>Persona</option>
-              <option value="empresa">Empresa</option>
+              <option value="Administrador" selected>Administrador</option>
+              <option value="Mecanico">Mecanico</option>
+              <option value="Secretaria">Secretaria</option>
+              <option value="Supervisor">Supervisor</option>
             </select>
-            <label for="floatingSelect">Tipo</label>
+            <label for="floatingSelect">puesto</label>
           </div>
         </div>
-        <div class="col col-lg-4 align-self-center">
+        <div class="col col-lg-2 align-self-center">
           <input type="hidden" name="fecha" :value="formatDate" />
           <button value="Crear" class="btn btn-primary pe-4 px-4 pt-2 pb-2">
             <i class="fas fa-save me-2 fs-5"></i>
             Crear
           </button>
         </div>
-      </div>
+       </div>
     </form>
 
     <div
@@ -152,22 +170,28 @@
       class="row border-bottom overflow-auto shadow-sm mt-5 mb-4 rounded p-1"
     >
       <div class="col col-lg-2">
-        <h4>Nombre</h4>
-      </div>
-      <div class="col col-lg-2">
-        <h4>Identificacion</h4>
-      </div>
-      <div class="col col-lg-2">
-        <h4>telefono</h4>
-      </div>
-      <div class="col col-lg-2">
-        <h4>Email</h4>
+        <h6>Nombre</h6>
       </div>
       <div class="col col-lg-1">
-        <h4>Tipo</h4>
+        <h6>Identificacion</h6>
+      </div>
+      <div class="col col-lg-1">
+        <h6>telefono</h6>
       </div>
       <div class="col col-lg-2">
-        <h4>Fecha Creacion</h4>
+        <h6>Email</h6>
+      </div>
+      <div class="col col-lg-2">
+        <h6>Direccion</h6>
+      </div>
+      <div class="col col-lg-1">
+        <h6>Puesto</h6>
+      </div>
+      <div class="col col-lg-1">
+        <h6>Salario</h6>
+      </div>
+      <div class="col col-lg-2">
+        <h6>Fecha Creacion</h6>
       </div>
     </div>
     <div class="gap"></div>
@@ -189,7 +213,7 @@
         {{ employee.email }}
       </div>
       <div class="col col-lg-1 align-self-center">
-        {{ employee.tipo }}
+        {{ employee.puesto }}
       </div>
       <div class="col col-lg-2 align-self-center">
         {{ employee.fecha_creacion }}
@@ -307,17 +331,17 @@
                 <div class="col col-lg-6">
                   <div class="form-floating">
                     <select
-                      name="tipo"
+                      name="puesto"
                       class="form-select"
                       id="floatingSelect"
-                      :value="EmployeeToEdit.tipo"
+                      :value="EmployeeToEdit.puesto"
                       aria-label="Floating label select example"
                       required
                     >
                       <option value="persona" selected>Persona</option>
                       <option value="empresa">Empresa</option>
                     </select>
-                    <label for="floatingSelect">Tipo</label>
+                    <label for="floatingSelect">puesto</label>
                   </div>
                 </div>
               </div>
@@ -363,7 +387,7 @@ export default {
       telefono: "",
       email: "",
       direccion: "",
-      tipo: "persona",
+      puesto: "Administrador",
     });
     //METHODS
     const toggleCreate = () => {
@@ -375,7 +399,7 @@ export default {
       filterSelected,
       createForm,
       searchBox,
-      toggleCreate
+      toggleCreate,
     };
   },
 };

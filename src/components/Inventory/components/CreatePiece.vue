@@ -5,15 +5,15 @@
     @submit.prevent=""
     v-if="toggleShow"
   >
-    <h2>Agregar Pieza</h2>
+    <h2>Agregar Repuesto</h2>
     <div class="row">
       <div class="col col-lg-3">
         <div class="form-floating">
           <input
             type="text"
-            name="detalle"
+            name="descripcion"
             class="form-control"
-            id="detalle"
+            id="descripcion"
             placeholder="Detalle"
           />
           <label for="Detalle">Detalle</label>
@@ -23,36 +23,36 @@
         <div class="form-floating">
           <input
             type="text"
-            name="fabricante"
+            name="id_prov"
             class="form-control"
-            id="fabricante"
-            placeholder="Fabricante"
+            id="proveedor"
+            placeholder="Proveedor"
           />
-          <label for="fabricante">Fabricante</label>
+          <label for="proveedor">Proveedor</label>
         </div>
       </div>
       <div class="col col-lg-3">
         <div class="form-floating">
           <input
             type="number"
-            name="buy_price"
+            name="pre_com"
             class="form-control"
-            id="buy_price"
+            id="pre_com"
             placeholder="Precio Compra"
           />
-          <label for="type">Precio Compra</label>
+          <label for="pre_com">Precio Compra</label>
         </div>
       </div>
       <div class="col col-lg-3">
         <div class="form-floating">
           <input
             type="number"
-            name="sell_price"
+            name="pre_ven"
             class="form-control"
-            id="sell_price"
+            id="pre_ven"
             placeholder="Precio Venta"
           />
-          <label for="type">Precio Venta</label>
+          <label for="pre_ven">Precio Venta</label>
         </div>
       </div>
     </div>
@@ -61,12 +61,12 @@
         <div class="form-floating">
           <input
             type="number"
-            name="existence"
+            name="existencia"
             class="form-control"
-            id="existence"
+            id="existencia"
             placeholder="Existencia"
           />
-          <label for="existence">Existencia</label>
+          <label for="existencia">Existencia</label>
         </div>
       </div>
       <div class="col col-lg-3">
@@ -92,8 +92,8 @@
               Motor de arranque
             </option>
             <option value="alternator">alternador</option>
-            <option value="alternator">Bujia</option>
-            <option value="alternator">Bateria</option>
+            <option value="bujia">Bujia</option>
+            <option value="bateria">Bateria</option>
           </select>
           <label for="floatingSelect">Categoria</label>
         </div>
