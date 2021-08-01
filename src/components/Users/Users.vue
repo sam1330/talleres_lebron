@@ -26,7 +26,7 @@
             v-model="filterSelected"
           >
             <option value="usuario" selected>Usuario</option>
-            <option value="id_empleado">ID Empleado</option>
+            <option value="id_usu">ID Usuario</option>
             <option value="rol">Rol</option>
           </select>
           <label for="floatingSelect">Filtrar Por:</label>
@@ -47,19 +47,19 @@
     >
       <h2>Crear Usuario</h2>
       <div class="row">
-        <div class="col col-lg-4">
+        <!-- <div class="col col-lg-4">
           <div class="form-floating">
             <input
               type="number"
-              name="id_empleado"
+              name="id_usu"
               class="form-control"
-              id="id_empleado"
-              placeholder="ID Empleado"
+              id="id_usu"
+              placeholder="ID Usuario"
               required
             />
-            <label for="id_empleado">ID Empleado</label>
+            <label for="id_usu">ID Usuario</label>
           </div>
-        </div>
+        </div> -->
         <div class="col col-lg-4">
           <div class="form-floating">
             <input
@@ -129,13 +129,13 @@
       class="row border-bottom shadow-sm mt-5 mb-4 rounded p-1"
     >
       <div class="col col-lg-4">
-        <h4>ID Empleado</h4>
+        <h6>ID Usuario</h6>
       </div>
       <div class="col col-lg-3">
-        <h4>Usuario</h4>
+        <h6>Usuario</h6>
       </div>
       <div class="col col-lg-3">
-        <h4>Rol</h4>
+        <h6>Rol</h6>
       </div>
     </div>
     <div class="gap"></div>
@@ -145,7 +145,7 @@
       :key="index"
     >
       <div class="col col-lg-4 align-self-center">
-        <h5>{{ user.id_empleado }}</h5>
+        <h5>{{ user.id_usu }}</h5>
       </div>
       <div class="col col-lg-3 align-self-center">
         <h5>{{ user.usuario }}</h5>
@@ -192,11 +192,11 @@
                   <div class="form-floating">
                     <input
                       type="number"
-                      name="id_empleado"
+                      name="id_usu"
                       class="form-control"
                       placeholder="Nombre"
                     />
-                    <label for="id_empleado">Nombre</label>
+                    <label for="id_usu">Nombre</label>
                   </div>
                 </div>
                 <div class="col col-lg-6">
