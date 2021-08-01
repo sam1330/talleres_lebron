@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h2 class="text-muted my-4">
-      <i class="fas fa-user-tie me-2"></i>Clientes
+      <i class="fas fa-boxes me-2"></i>Proveedores
     </h2>
     <div class="gap mt-3"></div>
     <div class="row">
@@ -13,7 +13,7 @@
             id="buscar"
             placeholder="Buscar"
             name="search"
-            @input="searchClient()"
+            @input="searchProvider()"
             v-model="searchBox"
           />
           <label for="buscar">Buscar</label>
@@ -39,18 +39,17 @@
     </div>
     <div class="toggle-crear my-3">
       <button class="btn btn-primary" @click="toggleCreate">
-        <i class="fas fa-plus me-2"></i>Añadir Cliente
+        <i class="fas fa-plus me-2"></i>Añadir Proveedor
       </button>
     </div>
     <div class="gap mt-3"></div>
     <form
       class="border p-2 rounded shadow-sm"
-      action=""
-      @submit.prevent="createClient()"
+      @submit.prevent="createProvider()"
       v-if="showCreate"
       id="create"
     >
-      <h2>Crear Cliente</h2>
+      <h2>Crear Proveedor</h2>
       <div class="row">
         <div class="col col-lg-3">
           <div class="form-floating">
@@ -83,7 +82,7 @@
         <div class="col col-lg-3">
           <div class="form-floating">
             <input
-              type="text"
+              type="tel"
               name="telefono"
               class="form-control"
               id="telefono"
@@ -122,7 +121,7 @@
             <label for="direccion">Direccion</label>
           </div>
         </div>
-        <div class="col col-lg-4">
+        <div class="col col-lg-2">
           <div class="form-floating">
             <select
               name="tipo"
@@ -131,15 +130,29 @@
               v-model="createForm.tipo"
               aria-label="Floating label select example"
             >
-              <option value="persona" selected>Persona</option>
-              <option value="empresa">Empresa</option>
+              <option value="Formal" selected>Formal</option>
+              <option value="Informal">Informal</option>
             </select>
             <label for="floatingSelect">Tipo</label>
           </div>
         </div>
-        <div class="col col-lg-4 align-self-center">
+        <div class="col col-lg-3">
+          <div class="form-floating">
+            <textarea
+              type=""
+              name="descripcion"
+              class="form-control"
+              id="descripcion"
+              v-model="createForm.descripcion"
+              placeholder="Descripcion"
+              style="max-height: 100px; min-height: 58px;"
+            />
+            <label for="descripcion">Descripcion</label>
+          </div>
+        </div>
+        <div class="col col-lg-2 align-self-center">
           <input type="hidden" name="fecha" :value="formatDate" />
-          <button value="Crear" class="btn btn-primary pe-4 px-4 pt-2 pb-2">
+          <button value="Crear" @click="createProvider()" class="btn btn-primary pe-4 px-4 pt-2 pb-2">
             <i class="fas fa-save me-2 fs-5"></i>
             Crear
           </button>
@@ -152,47 +165,47 @@
       class="row border-bottom overflow-auto shadow-sm mt-5 mb-4 rounded p-1"
     >
       <div class="col col-lg-2">
-        <h4>Nombre</h4>
+        <h6>Nombre</h6>
       </div>
       <div class="col col-lg-2">
-        <h4>Identificacion</h4>
+        <h6>Identificacion</h6>
       </div>
       <div class="col col-lg-2">
-        <h4>telefono</h4>
+        <h6>telefono</h6>
       </div>
       <div class="col col-lg-2">
-        <h4>Email</h4>
+        <h6>Email</h6>
       </div>
       <div class="col col-lg-1">
-        <h4>Tipo</h4>
+        <h6>Tipo</h6>
       </div>
-      <div class="col col-lg-2">
-        <h4>Fecha Creacion</h4>
+      <div class="col col-lg-1">
+        <h6>Descripcion</h6>
       </div>
     </div>
     <div class="gap"></div>
     <div
-      class="row t-clients border-bottom shadow-sm my-3 rounded"
-      v-for="client in clients"
-      :key="client.id"
+      class="row t-Providers border-bottom shadow-sm my-3 rounded"
+      v-for="provider in providers"
+      :key="provider.id"
     >
       <div class="col col-lg-2 align-self-center">
-        {{ client.nombre }}
+        {{ provider.nombre }}
       </div>
       <div class="col col-lg-2 align-self-center">
-        {{ client.identificacion }}
+        {{ provider.identificacion }}
       </div>
       <div class="col col-lg-2 align-self-center">
-        {{ client.telefono }}
+        {{ provider.telefono }}
       </div>
       <div class="col col-lg-2 overflow-auto align-self-center">
-        {{ client.email }}
+        {{ provider.email }}
       </div>
       <div class="col col-lg-1 align-self-center">
-        {{ client.tipo }}
+        {{ provider.tipo }}
       </div>
       <div class="col col-lg-2 align-self-center">
-        {{ client.fecha_creacion }}
+        {{ provider.descripcion }}
       </div>
       <div class="col col-lg-1 pb-1">
         <span class="me-2"
@@ -200,12 +213,12 @@
             class="far fa-edit fs-3 text-info"
             data-bs-toggle="modal"
             data-bs-target="#editModal"
-            @click="selectClientToEdit(client.id)"
+            @click="selectproviderToEdit(provider.id)"
           ></i></span
         ><span
           ><i
             class="far fa-trash-alt fs-3 text-danger"
-            @click="deleteClient(client.id)"
+            @click="deleteProvider(provider.id)"
           ></i
         ></span>
       </div>
@@ -221,7 +234,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="editModalLabel">Editar Cliente</h5>
+            <h5 class="modal-title" id="editModalLabel">Editar Proveedor</h5>
             <button
               type="button"
               class="btn-close"
@@ -230,7 +243,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="updateClient()" id="editForm">
+            <form @submit.prevent="updateProvider()" id="editForm">
               <div class="row">
                 <div class="col col-lg-6">
                   <div class="form-floating">
@@ -239,7 +252,7 @@
                       name="nombre"
                       class="form-control"
                       id="name"
-                      :value="clientToEdit.nombre"
+                      :value="providerToEdit.nombre"
                       placeholder="Nombre"
                       required
                     />
@@ -253,7 +266,7 @@
                       name="identificacion"
                       class="form-control"
                       id="identificacion"
-                      :value="clientToEdit.identificacion"
+                      :value="providerToEdit.identificacion"
                       placeholder="Identificacion"
                       required
                     />
@@ -269,7 +282,7 @@
                       name="telefono"
                       class="form-control"
                       id="telefono"
-                      :value="clientToEdit.telefono"
+                      :value="providerToEdit.telefono"
                       placeholder="Telefono"
                       required
                     />
@@ -283,7 +296,7 @@
                       name="email"
                       class="form-control"
                       id="email"
-                      :value="clientToEdit.email"
+                      :value="providerToEdit.email"
                       placeholder="Email"
                     />
                     <label for="email">Email</label>
@@ -298,7 +311,7 @@
                       name="direccion"
                       class="form-control"
                       id="direccion"
-                      :value="clientToEdit.direccion"
+                      :value="providerToEdit.direccion"
                       placeholder="Direccion"
                     />
                     <label for="direccion">Direccion</label>
@@ -310,7 +323,7 @@
                       name="tipo"
                       class="form-select"
                       id="floatingSelect"
-                      :value="clientToEdit.tipo"
+                      :value="providerToEdit.tipo"
                       aria-label="Floating label select example"
                       required
                     >
@@ -321,7 +334,7 @@
                   </div>
                 </div>
               </div>
-              <input type="hidden" :value="clientToEdit.id" name="id" />
+              <input type="hidden" :value="providerToEdit.id" name="id" />
             </form>
           </div>
           <div class="modal-footer">
@@ -334,7 +347,7 @@
             </button>
             <button
               type="button"
-              @click="updateClient()"
+              @click="updateProvider()"
               class="btn btn-primary"
             >
               <i class="fas fa-save me-2"></i>Guardar
@@ -351,13 +364,13 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { baseUrl } from "../../model/main";
 export default {
-  name: "clients",
+  name: "providers",
   components: {},
   setup() {
     const allowChangePassword = ref(false);
     const showCreate = ref(false);
-    const clients = ref([]);
-    const clientToEdit = ref({});
+    const providers = ref([]);
+    const providerToEdit = ref({});
     const filterSelected = ref("nombre");
     const createForm = ref({
       nombre: "",
@@ -365,15 +378,16 @@ export default {
       telefono: "",
       email: "",
       direccion: "",
-      tipo: "persona",
+      tipo: "Formal",
     });
     const searchBox = ref("");
     //METHODS
     const toggleCreate = () => {
       showCreate.value = !showCreate.value;
     };
-    const createClient = () => {
-      const queryUrl = `${baseUrl}crud/clients/createClient.php`;
+
+    const createProvider = () => {
+      const queryUrl = `${baseUrl}crud/Providers/createProvider.php`;
       const frm = document.getElementById("create");
       axios
         .post(queryUrl, new FormData(frm))
@@ -382,38 +396,40 @@ export default {
             console.log(res.data);
             Swal.fire({
               title: "Hurra!!",
-              text: "Cliente creado",
+              text: "Proveedor creado",
               icon: "success",
             });
             clearCreateForm();
-            fetchClients();
+            fetchProviders();
           }
         })
         .catch((e) => console.log(e));
     };
-    const updateClient = () => {
+
+    const updateProvider = () => {
       const form = document.getElementById("editForm");
-      const queryUrl = `${baseUrl}crud/clients/updateClient.php`;
+      const queryUrl = `${baseUrl}crud/Providers/updateProvider.php`;
       axios.post(queryUrl, new FormData(form)).then((res) => {
         if (res.data === "success") {
           Swal.fire({
             title: "Hurra!!",
-            text: "Cliente Actualizado",
+            text: "Proveedor Actualizado",
             icon: "success",
           });
         }else {
           Swal.fire({
             title: "Ups!!",
-            text: "Cliente no pudo ser Actualizado",
+            text: "Proveedor no pudo ser Actualizado",
             icon: "error",
           });
         }
       });
     };
-    const deleteClient = (id) => {
-      const queryUrl = `${baseUrl}crud/clients/deleteClient.php?id=${id}`;
+
+    const deleteProvider = (id) => {
+      const queryUrl = `${baseUrl}crud/Providers/deleteProvider.php?id=${id}`;
       Swal.fire({
-        title: "¿Eliminar Cliente?",
+        title: "¿Eliminar Proveedor?",
         text: "Esta accion no se puede deshacer",
         icon: "warning",
         showCancelButton: true,
@@ -421,11 +437,11 @@ export default {
         if (!result.isDismissed) {
           axios.get(queryUrl).then((res) => {
             if (res.data === "success") {
-              clients.value = [];
-              fetchClients();
+              providers.value = [];
+              fetchProviders();
               Swal.fire({
-                title: "Cliente eliminado",
-                text: "El cliente ha sido eliminado con exito",
+                title: "Proveedor eliminado",
+                text: "El Proveedor ha sido eliminado con exito",
                 icon: "success",
               });
             }
@@ -433,39 +449,43 @@ export default {
         }
       });
     };
-    const searchClient = () => {
-      const queryUrl = `${baseUrl}crud/clients/searchClients.php?${filterSelected.value}=${searchBox.value}`;
+
+    const searchProvider = () => {
+      const queryUrl = `${baseUrl}crud/Providers/searchProviders.php?${filterSelected.value}=${searchBox.value}`;
       axios.get(queryUrl).then((res) => {
-        clients.value = res.data;
+        providers.value = res.data;
       });
     };
 
-    const fetchClients = () => {
-      const queryUrl = `${baseUrl}crud/clients/fetchClients.php`;
+    const fetchProviders = () => {
+      const queryUrl = `${baseUrl}crud/Providers/fetchProviders.php`;
       axios
         .get(queryUrl)
         .then((res) => {
           if (res.data) {
-            clients.value = [];
+            providers.value = [];
             res.data.forEach((element) => {
-              clients.value.push(element);
+              providers.value.push(element);
             });
           }
         })
         .catch((e) => console.log(e));
     };
-    const selectClientToEdit = (id) => {
-      clients.value.filter((client) => {
-        if (client.id === id) {
-          clientToEdit.value = client;
+
+    const selectProviderToEdit = (id) => {
+      providers.value.filter((provider) => {
+        if (provider.id === id) {
+          providerToEdit.value = provider;
         }
       });
-      console.log(clientToEdit.value);
+      console.log(providerToEdit.value);
     };
+
     const formatDate = computed(() => {
       var todayDate = new Date().toISOString().slice(0, 10);
       return todayDate;
     });
+
     const clearCreateForm = () => {
       createForm.value.nombre = "";
       createForm.value.identificacion = "";
@@ -474,21 +494,22 @@ export default {
       createForm.value.direccion = "";
       createForm.value.tipo = "persona";
     };
+
     onMounted(() => {
-      fetchClients();
+      fetchProviders();
     });
     return {
       formatDate,
-      selectClientToEdit,
+      selectProviderToEdit,
       showCreate,
       toggleCreate,
-      clients,
-      deleteClient,
-      updateClient,
-      createClient,
-      searchClient,
+      providers,
+      deleteProvider,
+      updateProvider,
+      createProvider,
+      searchProvider,
       allowChangePassword,
-      clientToEdit,
+      providerToEdit,
       searchBox,
       filterSelected,
       createForm,
@@ -503,7 +524,7 @@ export default {
 span > i {
   cursor: pointer;
 }
-.t-clients {
+.t-Providers {
   background-color: rgba(218, 218, 218, 0.76);
 }
 h5,

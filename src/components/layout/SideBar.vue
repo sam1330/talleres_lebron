@@ -48,9 +48,6 @@
               <ul class="dropdown-menu" aria-labelledby="inventario">
                 <li><router-link to="/pieces" class="dropdown-item">Piezas</router-link></li>
                 <li><router-link to="/services" class="dropdown-item">Servicios</router-link></li>
-                <li>
-                  <a class="dropdown-item">Proveedores</a>
-                </li>
               </ul>
             </li>
             <li class="nav-item dropdown">
@@ -68,8 +65,9 @@
                 <li><router-link to="/clients" class="dropdown-item">Clientes</router-link></li>
                 <li><router-link to="/users" class="dropdown-item">Usuarios</router-link></li>
                 <li>
-                  <a class="dropdown-item" href="#">Empleados</a>
+                  <router-link to="/employees" class="dropdown-item">Empleados</router-link>
                 </li>
+                <li><router-link to="/providers" class="dropdown-item">Proveedores</router-link></li>
               </ul>
             </li>
             <li class="nav-item">
@@ -93,11 +91,7 @@
     </nav>
 </template>
 <script>
-// import DropDown from "../layout/DropDown.vue";
 export default {
-  components: {
-    // DropDown
-  },
   setup() {},
 };
 </script>
