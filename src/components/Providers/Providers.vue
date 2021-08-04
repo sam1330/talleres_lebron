@@ -45,7 +45,7 @@
     <div class="gap mt-3"></div>
     <form
       class="border p-2 rounded shadow-sm"
-      @submit.prevent="createProvider()"
+      @submit.prevent="createProvider"
       v-if="showCreate"
       id="create"
     >
@@ -145,14 +145,17 @@
               id="descripcion"
               v-model="createForm.descripcion"
               placeholder="Descripcion"
-              style="max-height: 100px; min-height: 58px;"
+              style="max-height: 100px; min-height: 58px"
             />
             <label for="descripcion">Descripcion</label>
           </div>
         </div>
         <div class="col col-lg-2 align-self-center">
           <input type="hidden" name="fecha" :value="formatDate" />
-          <button value="Crear" @click="createProvider()" class="btn btn-primary pe-4 px-4 pt-2 pb-2">
+          <button
+            @click="createProvider"
+            class="btn btn-primary pe-4 px-4 pt-2 pb-2"
+          >
             <i class="fas fa-save me-2 fs-5"></i>
             Crear
           </button>
@@ -164,7 +167,7 @@
       id="t-header"
       class="row border-bottom overflow-auto shadow-sm mt-5 mb-4 rounded p-1"
     >
-      <div class="col col-lg-2">
+      <div class="col col-lg-1">
         <h6>Nombre</h6>
       </div>
       <div class="col col-lg-2">
@@ -187,9 +190,9 @@
     <div
       class="row t-Providers border-bottom shadow-sm my-3 rounded"
       v-for="provider in providers"
-      :key="provider.id"
+      :key="provider.id_prov"
     >
-      <div class="col col-lg-2 align-self-center">
+      <div class="col col-lg-1 align-self-center">
         {{ provider.nombre }}
       </div>
       <div class="col col-lg-2 align-self-center">
@@ -207,18 +210,18 @@
       <div class="col col-lg-2 align-self-center">
         {{ provider.descripcion }}
       </div>
-      <div class="col col-lg-1 pb-1">
+      <div class="col col-lg-2 pb-1">
         <span class="me-2"
           ><i
             class="far fa-edit fs-3 text-info"
             data-bs-toggle="modal"
             data-bs-target="#editModal"
-            @click="selectproviderToEdit(provider.id)"
+            @click="selectProviderToEdit(provider.id_prov)"
           ></i></span
         ><span
           ><i
             class="far fa-trash-alt fs-3 text-danger"
-            @click="deleteProvider(provider.id)"
+            @click="deleteProvider(provider.id_prov)"
           ></i
         ></span>
       </div>
@@ -327,14 +330,30 @@
                       aria-label="Floating label select example"
                       required
                     >
-                      <option value="persona" selected>Persona</option>
-                      <option value="empresa">Empresa</option>
+                      <option value="Formal" selected>Formal</option>
+                      <option value="Informal">Informal</option>
                     </select>
                     <label for="floatingSelect">Tipo</label>
                   </div>
                 </div>
               </div>
-              <input type="hidden" :value="providerToEdit.id" name="id" />
+              <div class="row mt-3">
+                <div class="col col-lg-6">
+                  <div class="form-floating">
+                    <textarea
+                      type=""
+                      name="descripcion"
+                      class="form-control"
+                      id="descripcion"
+                      :value="providerToEdit.descripcion"
+                      placeholder="Descripcion"
+                      style="max-height: 100px; min-height: 58px"
+                    />
+                    <label for="descripcion">Descripcion</label>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" :value="providerToEdit.id_prov" name="id" />
             </form>
           </div>
           <div class="modal-footer">
@@ -346,7 +365,7 @@
               <i class="fas fa-times-circle me-2"></i>Cerrar
             </button>
             <button
-              type="button"
+              type="submit"
               @click="updateProvider()"
               class="btn btn-primary"
             >
@@ -393,7 +412,6 @@ export default {
         .post(queryUrl, new FormData(frm))
         .then((res) => {
           if (res.data == "success") {
-            console.log(res.data);
             Swal.fire({
               title: "Hurra!!",
               text: "Proveedor creado",
@@ -416,7 +434,7 @@ export default {
             text: "Proveedor Actualizado",
             icon: "success",
           });
-        }else {
+        } else {
           Swal.fire({
             title: "Ups!!",
             text: "Proveedor no pudo ser Actualizado",
@@ -451,7 +469,7 @@ export default {
     };
 
     const searchProvider = () => {
-      const queryUrl = `${baseUrl}crud/Providers/searchProviders.php?${filterSelected.value}=${searchBox.value}`;
+      const queryUrl = `${baseUrl}crud/Providers/searchProvider.php?${filterSelected.value}=${searchBox.value}`;
       axios.get(queryUrl).then((res) => {
         providers.value = res.data;
       });
@@ -474,11 +492,10 @@ export default {
 
     const selectProviderToEdit = (id) => {
       providers.value.filter((provider) => {
-        if (provider.id === id) {
+        if (provider.id_prov === id) {
           providerToEdit.value = provider;
         }
       });
-      console.log(providerToEdit.value);
     };
 
     const formatDate = computed(() => {

@@ -70,15 +70,6 @@
                 <li><router-link to="/providers" class="dropdown-item">Proveedores</router-link></li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                href="#"
-                tabindex="-1"
-                aria-disabled="true"
-                >Disabled</a
-              >
-            </li>
           </ul>
           <form class="d-flex">
             <h5 class="m-2">Samuel Martinez</h5>

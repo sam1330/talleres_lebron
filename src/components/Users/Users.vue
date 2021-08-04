@@ -42,8 +42,9 @@
     <!-- ----------------------------------INICIO FORM CREAR------------------------------------------------------- -->
     <form
       class="border p-2 rounded shadow-sm"
-      @submit.prevent="createUser"
+      @submit.prevent="createUser()"
       v-show="showCreate"
+      id="create"
     >
       <h2>Crear Usuario</h2>
       <div class="row">
@@ -73,15 +74,16 @@
             <label for="user">Usuario</label>
           </div>
         </div>
-        
+
         <div class="col col-lg-4">
           <div class="form-floating">
             <select
               class="form-select"
               aria-label="Floating label select example"
+              name="rol"
             >
-              <option value="empleado" selected>Empleado Comun</option>
-              <option value="administrator">Administrador</option>
+              <option value="Empleado" selected>Empleado Comun</option>
+              <option value="Administrador">Administrador</option>
             </select>
             <label for="floatingSelect">Rol</label>
           </div>
@@ -95,6 +97,7 @@
               name="pass"
               class="form-control"
               placeholder="Contraseña"
+              v-model="pass"
               required
             />
             <label for="password">Contraseña</label>
@@ -106,20 +109,18 @@
               type="password"
               class="form-control"
               placeholder="Confirmar contraseña"
+              v-model="conf_pass"
               required
             />
             <label for="confirm_password">Confirmar contraseña</label>
           </div>
         </div>
-         
+
         <div class="col col-lg-4 align-self-center">
-         
           <button
-            class="btn btn-primary pe-4 px-4 pt-2 pb-2"
-            @click="createUser"
-          >
-            <i class="fas fa-save me-2 fs-5"></i>Crear
-          </button>
+            type="submit"
+            class="btn btn-primary"
+          ><i class="fas fa-save me-2 fs-5"></i>Crear</button>
         </div>
       </div>
     </form>
@@ -154,14 +155,17 @@
         <h5>{{ user.rol }}</h5>
       </div>
       <div class="col col-lg- 2 pb-1">
-        <span class="me-5"
+        <span class="me-5" @click="selectUserToEdit(user.id_usu)"
           ><i
             class="far fa-edit fs-3 text-info"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           ></i></span
         ><span
-          ><i class="far fa-trash-alt fs-3 text-danger" @click="deleteUser"></i
+          ><i
+            class="far fa-trash-alt fs-3 text-danger"
+            @click="deleteUser(user.id_usu)"
+          ></i
         ></span>
       </div>
     </div>
@@ -186,26 +190,16 @@
           </div>
           <div class="modal-body">
             <!------------------------------------- INICIO FORM EDIT ----------------------------------->
-            <form>
+            <form @submit.prevent="updateUser()" id="edit">
               <div class="row">
                 <div class="col col-lg-6">
                   <div class="form-floating">
                     <input
-                      type="number"
-                      name="id_usu"
-                      class="form-control"
-                      placeholder="Nombre"
-                    />
-                    <label for="id_usu">Nombre</label>
-                  </div>
-                </div>
-                <div class="col col-lg-6">
-                  <div class="form-floating">
-                    <input
                       type="text"
-                      name="user"
+                      name="usuario"
                       class="form-control"
                       placeholder="Usuario"
+                      v-model="userToEdit.usuario"
                     />
                     <label for="user">Usuario</label>
                   </div>
@@ -216,13 +210,14 @@
                   <div class="form-floating">
                     <select
                       class="form-select"
-                      id="floatingSelect"
-                      aria-label="Floating label select example"
+                      id="rolEdit"
+                      name="rol"
+                      v-model="userToEdit.rol"
                     >
-                      <option value="empleado" selected>Empleado Comun</option>
-                      <option value="administrator">Administrador</option>
+                      <option value="Empleado" selected>Empleado Comun</option>
+                      <option value="Administrador">Administrador</option>
                     </select>
-                    <label for="floatingSelect">Rol</label>
+                    <label for="rolEdit">Rol</label>
                   </div>
                 </div>
                 <div class="col col-lg-5 align-self-end">
@@ -230,6 +225,7 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
+                      name="allowChangePassword"
                       @click="allowChangePassword = !allowChangePassword"
                       v-model="allowChangePassword"
                     />
@@ -239,15 +235,16 @@
                   </div>
                 </div>
               </div>
-              <div class="row mt-3" v-if="allowChangePassword">
+              <div class="row mt-3" v-show="allowChangePassword">
                 <div class="col col-lg-5">
                   <div class="form-floating">
                     <input
                       type="password"
-                      name="password"
+                      name="pass"
                       class="form-control"
                       id="password"
                       placeholder="Contraseña"
+                      v-model="pass"
                     />
                     <label for="buscar">Contraseña</label>
                   </div>
@@ -256,13 +253,16 @@
                   <div class="form-floating">
                     <input
                       type="password"
+                      name="c_pass"
                       class="form-control"
                       id="c_password"
                       placeholder="Confirmar contraseña"
+                      v-model="conf_pass"
                     />
                     <label for="buscar">Confirmar contraseña</label>
                   </div>
                 </div>
+                <input type="hidden" name="id_usu" v-model="userToEdit.id_usu">
               </div>
             </form>
             <!-- FIN FORM EDITAR -->
@@ -275,7 +275,13 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="updateUser()"
+            >
+              Guardar Cambios
+            </button>
           </div>
         </div>
       </div>
@@ -295,21 +301,69 @@ export default {
     const allowChangePassword = ref(false);
     const showCreate = ref(false);
     const users = ref([]);
+    const userToEdit = ref({});
+    const pass = ref("");
+    const conf_pass = ref("");
     const toggleCreate = () => {
       showCreate.value = !showCreate.value;
     };
     const filterSelected = ref("usuario");
     const searchBox = ref("");
 
-    const createUser = () => {};
-    const updateUser = () => {
-      Swal.fire({
-        title: "Hurra!!",
-        text: "Usuario Actualizado",
-        icon: "success",
-      });
+    const createUser = () => {
+      if (pass.value != conf_pass.value) {
+        Swal.fire({
+          title: "Error",
+          text: "Contraseñas no coinciden",
+          icon: "error",
+        });
+        return;
+      }
+      const queryUrl = `${baseUrl}crud/users/createUser.php`;
+      const frm = document.getElementById("create");
+      axios
+        .post(queryUrl, new FormData(frm))
+        .then((res) => {
+          if (res.data === "success") {
+            Swal.fire({
+              title: "Hurra!!",
+              text: "Usuario creado con exito",
+              icon: "success",
+            });
+            fetchUsers();
+          }
+        })
+        .catch((e) => console.log(e));
+        pass.value = "";
+        conf_pass.value = "";
     };
-    const deleteUser = () => {
+    const updateUser = () => {
+      if (pass.value != conf_pass.value) {
+        Swal.fire({
+          title: "Error",
+          text: "Contraseñas no coinciden",
+          icon: "error",
+        });
+        return;
+      }
+      const queryUrl = `${baseUrl}crud/users/updateUser.php`;
+      const frm = document.getElementById("edit");
+      axios
+        .post(queryUrl, new FormData(frm))
+        .then((res) => {
+          if (res.data === "success") {
+            Swal.fire({
+              title: "Hurra!!",
+              text: "Usuario creado con exito",
+              icon: "success",
+            });
+            fetchUsers();
+          }
+        })
+        .catch((e) => console.log(e));
+    };
+    const deleteUser = (id) => {
+      const queryUrl = `${baseUrl}crud/users/deleteUser.php?id_usu=${id}`;
       Swal.fire({
         title: "¿Eliminar usuario?",
         text: "Esta accion no se puede deshacer",
@@ -317,7 +371,22 @@ export default {
         showCancelButton: true,
       }).then((result) => {
         if (!result.isDismissed) {
-          alert("Usuario Eliminado");
+          axios.get(queryUrl).then((res) => {
+            if (res.data === "success") {
+              Swal.fire({
+                title: "Usuario Eliminado",
+                icon: "warning",
+              });
+            fetchUsers();
+            }
+          });
+        }
+      });
+    };
+    const selectUserToEdit = (id) => {
+      users.value.filter((user) => {
+        if (user.id_usu === id) {
+          userToEdit.value = user;
         }
       });
     };
@@ -350,8 +419,12 @@ export default {
       showCreate,
       searchBox,
       users,
+      userToEdit,
+      pass,
+      conf_pass,
       filterSelected,
       toggleCreate,
+      selectUserToEdit,
       fetchUsers,
       deleteUser,
       updateUser,
