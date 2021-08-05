@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-lg">
     <h2 class="text-muted my-4">
       <i class="fas fa-boxes me-2"></i>Proveedores
     </h2>
@@ -152,10 +152,7 @@
         </div>
         <div class="col col-lg-2 align-self-center">
           <input type="hidden" name="fecha" :value="formatDate" />
-          <button
-            @click="createProvider"
-            class="btn btn-primary pe-4 px-4 pt-2 pb-2"
-          >
+          <button type="submit" class="btn btn-primary pe-4 px-4 pt-2 pb-2">
             <i class="fas fa-save me-2 fs-5"></i>
             Crear
           </button>
@@ -210,7 +207,7 @@
       <div class="col col-lg-2 align-self-center">
         {{ provider.descripcion }}
       </div>
-      <div class="col col-lg-2 pb-1">
+      <div class="col col-lg-2 pb-1 align-self-center">
         <span class="me-2"
           ><i
             class="far fa-edit fs-3 text-info"
@@ -434,6 +431,7 @@ export default {
             text: "Proveedor Actualizado",
             icon: "success",
           });
+          fetchProviders();
         } else {
           Swal.fire({
             title: "Ups!!",
@@ -509,7 +507,7 @@ export default {
       createForm.value.telefono = "";
       createForm.value.email = "";
       createForm.value.direccion = "";
-      createForm.value.tipo = "persona";
+      createForm.value.tipo = "Formal";
     };
 
     onMounted(() => {

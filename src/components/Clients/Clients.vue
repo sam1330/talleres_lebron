@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-lg">
     <h2 class="text-muted my-4">
       <i class="fas fa-user-tie me-2"></i>Clientes
     </h2>
@@ -194,7 +194,7 @@
       <div class="col col-lg-1 align-self-center">
         {{ client.fecha_creacion }}
       </div>
-      <div class="col col-lg-1 pb-1">
+      <div class="col col-lg-1 pb-1 align-self-center">
         <span class="me-2"
           ><i
             class="far fa-edit fs-3 text-info"
@@ -401,7 +401,8 @@ export default {
             text: "Cliente Actualizado",
             icon: "success",
           });
-        }else {
+          fetchClients();
+        } else {
           Swal.fire({
             title: "Ups!!",
             text: "Cliente no pudo ser Actualizado",

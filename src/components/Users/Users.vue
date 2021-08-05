@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-lg">
     <h2 class="text-muted my-4">
       <i class="fas fa-users-cog me-2"></i>Usuarios
     </h2>
@@ -117,10 +117,9 @@
         </div>
 
         <div class="col col-lg-4 align-self-center">
-          <button
-            type="submit"
-            class="btn btn-primary"
-          ><i class="fas fa-save me-2 fs-5"></i>Crear</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save me-2 fs-5"></i>Crear
+          </button>
         </div>
       </div>
     </form>
@@ -154,8 +153,8 @@
       <div class="col col-lg-3 align-self-center">
         <h5>{{ user.rol }}</h5>
       </div>
-      <div class="col col-lg- 2 pb-1">
-        <span class="me-5" @click="selectUserToEdit(user.id_usu)"
+      <div class="col col-lg-2 pb-1 align-self-center">
+        <span class="me-2" @click="selectUserToEdit(user.id_usu)"
           ><i
             class="far fa-edit fs-3 text-info"
             data-bs-toggle="modal"
@@ -262,7 +261,11 @@
                     <label for="buscar">Confirmar contraseña</label>
                   </div>
                 </div>
-                <input type="hidden" name="id_usu" v-model="userToEdit.id_usu">
+                <input
+                  type="hidden"
+                  name="id_usu"
+                  v-model="userToEdit.id_usu"
+                />
               </div>
             </form>
             <!-- FIN FORM EDITAR -->
@@ -275,11 +278,7 @@
             >
               Close
             </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="updateUser()"
-            >
+            <button type="button" class="btn btn-primary" @click="updateUser()">
               Guardar Cambios
             </button>
           </div>
@@ -334,8 +333,8 @@ export default {
           }
         })
         .catch((e) => console.log(e));
-        pass.value = "";
-        conf_pass.value = "";
+      pass.value = "";
+      conf_pass.value = "";
     };
     const updateUser = () => {
       if (pass.value != conf_pass.value) {
@@ -377,7 +376,7 @@ export default {
                 title: "Usuario Eliminado",
                 icon: "warning",
               });
-            fetchUsers();
+              fetchUsers();
             }
           });
         }
