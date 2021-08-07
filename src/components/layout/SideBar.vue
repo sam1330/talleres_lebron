@@ -46,7 +46,7 @@
                 Inventario
               </a>
               <ul class="dropdown-menu" aria-labelledby="inventario">
-                <li><router-link to="/pieces" class="dropdown-item">Piezas</router-link></li>
+                <li><router-link to="/pieces" class="dropdown-item">Repuestos</router-link></li>
                 <li><router-link to="/services" class="dropdown-item">Servicios</router-link></li>
               </ul>
             </li>

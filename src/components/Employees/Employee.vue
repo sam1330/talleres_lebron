@@ -506,7 +506,7 @@
 import { ref, computed, onMounted } from "vue";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { baseUrl } from "../../model/main";
+import { baseUrl, currencyFormatter } from "../../model/main";
 export default {
   name: "employees",
   setup() {
@@ -537,17 +537,7 @@ export default {
         }
       });
     };
-    const currencyFormatter = (val) => {
-      var formatter = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-
-        // These options are needed to round to whole numbers if that's what you want.
-        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-        //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
-      });
-      return formatter.format(val);
-    };
+    
     const createEmployee = () => {
       const queryUrl = `${baseUrl}crud/employee/createEmployee.php`;
       const frm = document.getElementById("create");
@@ -637,6 +627,7 @@ export default {
         }
       });
     };
+    
     const formatDate = computed(() => {
       var todayDate = new Date().toISOString().slice(0, 10);
       return todayDate;
