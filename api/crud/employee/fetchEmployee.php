@@ -3,7 +3,7 @@
 $temporal = array();
 $resultado = array();
 
-$query = $con->query("SELECT * FROM clientes");
+$query = $con->query("SELECT * FROM empleados");
 
 while ($a = $query->fetch_assoc()){
     $temporal = $a;
