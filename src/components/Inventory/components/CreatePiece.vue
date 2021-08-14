@@ -2,7 +2,8 @@
   <form
     class="border p-2 rounded shadow-sm"
     action=""
-    @submit.prevent=""
+    id="create"
+    @submit.prevent="createPiece()"
     v-if="toggleShow"
   >
     <h2>Agregar Repuesto</h2>
@@ -11,9 +12,9 @@
         <div class="form-floating">
           <input
             type="text"
-            name="descripcion"
+            name="detalle"
             class="form-control"
-            id="descripcion"
+            id="Detalle"
             placeholder="Detalle"
           />
           <label for="Detalle">Detalle</label>
@@ -21,13 +22,15 @@
       </div>
       <div class="col col-lg-3">
         <div class="form-floating">
-          <input
-            type="text"
-            name="id_prov"
-            class="form-control"
-            id="proveedor"
-            placeholder="Proveedor"
-          />
+          <select class="form-select" id="proveedor" name="id_prov">
+            <option
+              v-for="provider in providers"
+              :key="provider.id_prov"
+              :value="provider.id_prov"
+            >
+              {{ provider.nombre }}
+            </option>
+          </select>
           <label for="proveedor">Proveedor</label>
         </div>
       </div>
@@ -35,24 +38,22 @@
         <div class="form-floating">
           <input
             type="number"
-            name="pre_com"
+            name="prec_com"
             class="form-control"
-            id="pre_com"
             placeholder="Precio Compra"
           />
-          <label for="pre_com">Precio Compra</label>
+          <label>Precio Compra</label>
         </div>
       </div>
       <div class="col col-lg-3">
         <div class="form-floating">
           <input
             type="number"
-            name="pre_ven"
+            name="prec_ven"
             class="form-control"
-            id="pre_ven"
             placeholder="Precio Venta"
           />
-          <label for="pre_ven">Precio Venta</label>
+          <label>Precio Venta</label>
         </div>
       </div>
     </div>
@@ -73,7 +74,7 @@
         <div class="form-floating">
           <input
             type="number"
-            name="reorder"
+            name="reorden"
             class="form-control"
             id="reorder"
             placeholder="Reorden"
@@ -83,34 +84,42 @@
       </div>
       <div class="col col-lg-3">
         <div class="form-floating">
-          <select
-            class="form-select"
-            id="floatingSelect"
-            aria-label="Floating label select example"
-          >
-            <option value="motor_de_arranque" selected>
-              Motor de arranque
+          <select class="form-select" name="id_cat">
+            <option
+              v-for="category in categories"
+              :key="category.id_cat"
+              :value="category.id_cat"
+            >
+              {{ category.descripcion }}
             </option>
-            <option value="alternator">alternador</option>
-            <option value="bujia">Bujia</option>
-            <option value="bateria">Bateria</option>
           </select>
-          <label for="floatingSelect">Categoria</label>
+          <label>Categoria</label>
         </div>
       </div>
-      <div class="col col-lg-3 align-self-center">
-        <button
-          class="btn btn-primary pe-4 px-4 pt-2 pb-2"
-          @click="createArticle"
-        >
-          Crear
-        </button>
+      <div class="col col-lg-3">
+        <div class="form-floating">
+          <select class="form-select" name="id_alm">
+            <option value="1" selected>Para ventas</option>
+            <option value="2">Almacenados</option>
+          </select>
+          <label>Almacen</label>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col col-lg-3 align-self-center">
+          <button type="submit" class="btn btn-primary pe-4 px-4 pt-2 pb-2">
+            <i class="fas fa-save me-2"></i>Crear
+          </button>
+        </div>
       </div>
     </div>
   </form>
 </template>
 <script>
-import { computed } from "vue";
+import { onMounted, ref, computed } from "vue";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { baseUrl } from "../../../model/main";
 export default {
   props: {
     showCreate: {
@@ -118,11 +127,109 @@ export default {
       default: false,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const toggleShow = computed(() => props.showCreate);
+    const providers = ref([]);
+    const selectedProvider = ref("");
+    const categories = ref([]);
+    const pieces = ref([]);
+    const createForm = ref({
+      detalle: "",
+      existencia: 0,
+      reorden: 10,
+      id_cat: null,
+      prec_com: 0,
+      prec_ven: 0,
+      id_prov: null,
+      id_alm: null,
+    });
 
+    const fetchCategories = () => {
+      const queryUrl = `${baseUrl}crud/categories/fetchCategories.php`;
+      axios
+        .get(queryUrl)
+        .then((res) => {
+          if (res.data) {
+            categories.value = [];
+            res.data.forEach((element) => {
+              categories.value.push(element);
+            });
+          }
+        })
+        .catch((e) => console.log(e));
+    };
+
+    const fetchProviders = () => {
+      const queryUrl = `${baseUrl}crud/Providers/fetchProviders.php`;
+      axios
+        .get(queryUrl)
+        .then((res) => {
+          if (res.data) {
+            providers.value = [];
+            res.data.forEach((element) => {
+              providers.value.push(element);
+            });
+          }
+        })
+        .catch((e) => console.log(e));
+    };
+
+    const fetchPieces = () => {
+      const queryUrl = `${baseUrl}crud/pieces/fetchPieces.php`;
+      axios
+        .get(queryUrl)
+        .then((res) => {
+          if (res.data) {
+            pieces.value = [];
+            res.data.forEach((element) => {
+              pieces.value.push(element);
+            });
+          }
+        })
+        .catch((e) => console.log(e));
+    };
+
+    const createPiece = () => {
+      const queryUrl = `${baseUrl}crud/pieces/createPiece.php`;
+      const frm = document.getElementById("create");
+      axios
+        .post(queryUrl, new FormData(frm))
+        .then((res) => {
+          if (res.data == "success") {
+            Swal.fire({
+              title: "Hurra!!",
+              text: "Proveedor creado",
+              icon: "success",
+            });
+            clearCreateForm();
+            emit("created");
+          }
+        })
+        .catch((e) => console.log(e));
+    };
+    const clearCreateForm = () => {
+      createForm.value.detalle = "";
+      createForm.value.existencia = 0;
+      createForm.value.reorden = 10;
+      createForm.value.id_cat = null;
+      createForm.value.prec_com = 0;
+      createForm.value.prec_ven = 0;
+      createForm.value.id_prov = null;
+      createForm.value.id_alm = null;
+    };
+    onMounted(() => {
+      fetchProviders();
+      fetchCategories();
+    });
     return {
       toggleShow,
+      providers,
+      selectedProvider,
+      categories,
+      fetchProviders,
+      createPiece,
+      fetchCategories,
+      fetchPieces,
     };
   },
 };

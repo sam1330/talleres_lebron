@@ -314,8 +314,8 @@
                       aria-label="Floating label select example"
                       required
                     >
-                      <option value="persona" selected>Persona</option>
-                      <option value="empresa">Empresa</option>
+                      <option value="Persona" selected>Persona</option>
+                      <option value="Empresa">Empresa</option>
                     </select>
                     <label for="floatingSelect">Tipo</label>
                   </div>
@@ -464,7 +464,14 @@ export default {
     const selectClientToEdit = (id) => {
       clients.value.filter((client) => {
         if (client.id === id) {
-          clientToEdit.value = client;
+          clientToEdit.value.id = client.id;
+          clientToEdit.value.nombre = client.nombre;
+          clientToEdit.value.identificacion = client.identificacion;
+          clientToEdit.value.telefono = client.telefono;
+          clientToEdit.value.email = client.email;
+          clientToEdit.value.direccion = client.direccion;
+          clientToEdit.value.tipo = client.tipo;
+          clientToEdit.value.fecha_creacion = client.fecha_creacion;
         }
       });
       console.log(clientToEdit.value);
@@ -479,7 +486,7 @@ export default {
       createForm.value.telefono = "";
       createForm.value.email = "";
       createForm.value.direccion = "";
-      createForm.value.tipo = "persona";
+      createForm.value.tipo = "Persona";
     };
     onMounted(() => {
       fetchClients();

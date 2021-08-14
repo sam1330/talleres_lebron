@@ -48,6 +48,7 @@
               <ul class="dropdown-menu" aria-labelledby="inventario">
                 <li><router-link to="/pieces" class="dropdown-item">Repuestos</router-link></li>
                 <li><router-link to="/services" class="dropdown-item">Servicios</router-link></li>
+                <li><router-link to="/categories" class="dropdown-item">Categorias</router-link></li>
               </ul>
             </li>
             <li class="nav-item dropdown">

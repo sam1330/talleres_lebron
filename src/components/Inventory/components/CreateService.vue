@@ -86,7 +86,7 @@ export default {
           if (res.data == "success") {
             Swal.fire({
               title: "Hurra!!",
-              text: "Empleado creado",
+              text: "Servicio creado",
               icon: "success",
             });
             clearCreateForm();
