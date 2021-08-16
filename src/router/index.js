@@ -48,6 +48,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "Home" */ '../views/Inventory/ServicesCrud.vue')
   },
   {
+    path: '/categories',
+    name: 'CategoriesCrud',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Home" */ '../views/Inventory/CategoriesCrud.vue')
+  },
+  {
     path: '/employees',
     name: 'EmployeeCrud',
     // route level code-splitting
@@ -62,6 +70,22 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "Home" */ '../views/Providers/ProvidersCrud.vue')
+  },
+  {
+    path: '/vehicles',
+    name: 'VehiclesCrud',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Home" */ '../views/Facturation/VehiclesCrud.vue')
+  },
+  {
+    path: '/facturation',
+    name: 'FacturationCrud',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Home" */ '../views/Facturation/FacturaCrud.vue') 
   },
 ]
 

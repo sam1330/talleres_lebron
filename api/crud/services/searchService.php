@@ -5,17 +5,17 @@ foreach ($_GET as $campo => $valor) {
     $var = "$".$campo."='".$valor."';"; 
     eval($var); //La funcion eval sirve para que tomemos literalmente todo como si no estuviera en comillas y poder hacer valida la variable. Very nice no?
 }
-if(isset($nombre)){
-    $query = $con->query("SELECT * FROM clientes WHERE nombre LIKE '%$nombre%'");
-}else if(isset($identificacion)){
-    $query = $con->query("SELECT * FROM clientes WHERE identificacion LIKE '%$identificacion%'");
-}else if(isset($telefono)){
-    $query = $con->query("SELECT * FROM clientes WHERE telefono LIKE '%$telefono%'");
-}else if(isset($email)){
-    $query = $con->query("SELECT * FROM clientes WHERE email LIKE '%$email%'");
+if(isset($detalle)){
+    $query = $con->query("SELECT * FROM servicio WHERE detalle LIKE '%$detalle%'");
+}else if(isset($id_ser)){
+    $query = $con->query("SELECT * FROM servicio WHERE id_ser LIKE '%$id_ser%'");
+}else if(isset($precio)){
+    $query = $con->query("SELECT * FROM servicio WHERE precio LIKE '%$precio%'");
+}else if(isset($dificultad)){
+    $query = $con->query("SELECT * FROM servicio WHERE dificultad LIKE '%$dificultad%'");
 } else {
-    $query = $con->query("SELECT * FROM clientes");
-} 
+    $query = $con->query("SELECT * FROM servicio");
+}
 
 
 $temporal = array();

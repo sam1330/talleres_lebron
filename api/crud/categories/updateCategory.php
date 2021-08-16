@@ -4,8 +4,9 @@
         $var = "$".$campo."='".$valor."';"; 
         eval($var); //La funcion eval sirve para que tomemos literalmente todo como si no estuviera en comillas y poder hacer valida la variable. Very nice no?
     }
-    $query = $con->prepare("INSERT INTO clientes (nombre, identificacion, telefono, email, direccion, tipo, fecha_creacion) VALUES (?,?,?,?,?,?,?)");
-    $query->bind_param("sssssss", $nombre, $identificacion, $telefono, $email, $direccion, $tipo, $fecha_creacion);
+    $query = $con->prepare("UPDATE categoria SET descripcion=?, porc_gan=?, porc_desc=? WHERE id_cat=?");
+    $query->bind_param("siii", $descripcion, $porc_gan, $porc_desc, $id_cat);
+    
 
     if ($query->execute()) {
         echo "success";

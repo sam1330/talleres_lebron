@@ -57,7 +57,7 @@
             <input
               type="text"
               name="nombre"
-              class="form-control"
+              class="form-control text-capitalize"
               id="name"
               v-model="createForm.nombre"
               placeholder="Nombre"
@@ -131,15 +131,15 @@
               v-model="createForm.tipo"
               aria-label="Floating label select example"
             >
-              <option value="persona" selected>Persona</option>
-              <option value="empresa">Empresa</option>
+              <option value="Persona" selected>Persona</option>
+              <option value="Empresa">Empresa</option>
             </select>
             <label for="floatingSelect">Tipo</label>
           </div>
         </div>
         <div class="col col-lg-4 align-self-center">
-          <input type="hidden" name="fecha" :value="formatDate" />
-          <button value="Crear" class="btn btn-primary pe-4 px-4 pt-2 pb-2">
+          <input type="hidden" name="fecha_creacion" :value="formatDate" />
+          <button type="submit" value="Crear" class="btn btn-primary pe-4 px-4 pt-2 pb-2">
             <i class="fas fa-save me-2 fs-5"></i>
             Crear
           </button>
@@ -314,8 +314,8 @@
                       aria-label="Floating label select example"
                       required
                     >
-                      <option value="persona" selected>Persona</option>
-                      <option value="empresa">Empresa</option>
+                      <option value="Persona" selected>Persona</option>
+                      <option value="Empresa">Empresa</option>
                     </select>
                     <label for="floatingSelect">Tipo</label>
                   </div>
@@ -365,7 +365,7 @@ export default {
       telefono: "",
       email: "",
       direccion: "",
-      tipo: "persona",
+      tipo: "Persona",
     });
     const searchBox = ref("");
     //METHODS
@@ -387,6 +387,12 @@ export default {
             });
             clearCreateForm();
             fetchClients();
+          } else {
+            Swal.fire({
+              title: "Error!!",
+              text: "Cliente no creado",
+              icon: "error",
+            });
           }
         })
         .catch((e) => console.log(e));
@@ -458,7 +464,14 @@ export default {
     const selectClientToEdit = (id) => {
       clients.value.filter((client) => {
         if (client.id === id) {
-          clientToEdit.value = client;
+          clientToEdit.value.id = client.id;
+          clientToEdit.value.nombre = client.nombre;
+          clientToEdit.value.identificacion = client.identificacion;
+          clientToEdit.value.telefono = client.telefono;
+          clientToEdit.value.email = client.email;
+          clientToEdit.value.direccion = client.direccion;
+          clientToEdit.value.tipo = client.tipo;
+          clientToEdit.value.fecha_creacion = client.fecha_creacion;
         }
       });
       console.log(clientToEdit.value);
@@ -473,7 +486,7 @@ export default {
       createForm.value.telefono = "";
       createForm.value.email = "";
       createForm.value.direccion = "";
-      createForm.value.tipo = "persona";
+      createForm.value.tipo = "Persona";
     };
     onMounted(() => {
       fetchClients();

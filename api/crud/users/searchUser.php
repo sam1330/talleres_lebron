@@ -11,6 +11,8 @@ if(isset($usuario)){
     $query = $con->query("SELECT * FROM usuarios WHERE id_usu LIKE '%$id_usu%'");
 }else if(isset($rol)){
     $query = $con->query("SELECT * FROM usuarios WHERE rol LIKE '%$rol%'");
+} else {
+    $query = $con->query("SELECT * FROM usuarios");
 }
 
 

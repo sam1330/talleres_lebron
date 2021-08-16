@@ -27,7 +27,8 @@
                 Facturacion
               </a>
               <ul class="dropdown-menu" aria-labelledby="facturacion">
-                <li><a class="dropdown-item" href="#">Facturacion</a></li>
+                <li><router-link to="/facturation" class="dropdown-item">Facturacion</router-link></li>
+                <li><router-link to="/vehicles" class="dropdown-item">Vehiculos</router-link></li>
                 <li><a class="dropdown-item" href="#">Consulta</a></li>
                 <li>
                   <a class="dropdown-item" href="#">Cuadre</a>
@@ -46,8 +47,9 @@
                 Inventario
               </a>
               <ul class="dropdown-menu" aria-labelledby="inventario">
-                <li><router-link to="/pieces" class="dropdown-item">Piezas</router-link></li>
+                <li><router-link to="/pieces" class="dropdown-item">Repuestos</router-link></li>
                 <li><router-link to="/services" class="dropdown-item">Servicios</router-link></li>
+                <li><router-link to="/categories" class="dropdown-item">Categorias</router-link></li>
               </ul>
             </li>
             <li class="nav-item dropdown">
