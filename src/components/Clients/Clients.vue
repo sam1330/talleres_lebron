@@ -57,7 +57,7 @@
             <input
               type="text"
               name="nombre"
-              class="form-control"
+              class="form-control text-capitalize"
               id="name"
               v-model="createForm.nombre"
               placeholder="Nombre"

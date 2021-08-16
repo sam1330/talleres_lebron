@@ -13,6 +13,8 @@ if(isset($nombre)){
     $query = $con->query("SELECT * FROM empleados WHERE telefono LIKE '%$telefono%'");
 }else if(isset($puesto)){
     $query = $con->query("SELECT * FROM empleados WHERE puesto LIKE '%$puesto%'");
+} else {
+    $query = $con->query("SELECT * FROM empleados");
 }
 
 

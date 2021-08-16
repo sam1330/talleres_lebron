@@ -54,7 +54,7 @@
             <input
               type="text"
               name="descripcion"
-              class="form-control"
+              class="form-control text-capitalize"
               id="descripcion"
               placeholder="Descripcion"
               v-model="createForm.descripcion"

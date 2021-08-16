@@ -27,7 +27,8 @@
                 Facturacion
               </a>
               <ul class="dropdown-menu" aria-labelledby="facturacion">
-                <li><a class="dropdown-item" href="#">Facturacion</a></li>
+                <li><router-link to="/facturation" class="dropdown-item">Facturacion</router-link></li>
+                <li><router-link to="/vehicles" class="dropdown-item">Vehiculos</router-link></li>
                 <li><a class="dropdown-item" href="#">Consulta</a></li>
                 <li>
                   <a class="dropdown-item" href="#">Cuadre</a>

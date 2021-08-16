@@ -9,6 +9,8 @@ if(isset($descripcion)){
     $query = $con->query("SELECT * FROM categoria WHERE descripcion LIKE '%$descripcion%'");
 }else if(isset($id_cat)){
     $query = $con->query("SELECT * FROM categoria WHERE id_cat LIKE '%$id_cat%'");
+} else {
+    $query = $con->query("SELECT * FROM categoria");
 }
 
 

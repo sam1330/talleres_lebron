@@ -49,7 +49,7 @@
         <div class="form-floating">
           <input
             type="number"
-            name="prec_ven"
+            name="precio"
             class="form-control"
             placeholder="Precio Venta"
           />
@@ -139,7 +139,7 @@ export default {
       reorden: 10,
       id_cat: null,
       prec_com: 0,
-      prec_ven: 0,
+      precio: 0,
       id_prov: null,
       id_alm: null,
     });
@@ -213,7 +213,7 @@ export default {
       createForm.value.reorden = 10;
       createForm.value.id_cat = null;
       createForm.value.prec_com = 0;
-      createForm.value.prec_ven = 0;
+      createForm.value.precio = 0;
       createForm.value.id_prov = null;
       createForm.value.id_alm = null;
     };

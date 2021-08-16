@@ -13,6 +13,8 @@ if(isset($nombre)){
     $query = $con->query("SELECT * FROM proveedor WHERE telefono LIKE '%$telefono%'");
 }else if(isset($email)){
     $query = $con->query("SELECT * FROM proveedor WHERE email LIKE '%$email%'");
+} else {
+    $query = $con->query("SELECT * FROM proveedor");
 }
 
 

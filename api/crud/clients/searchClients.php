@@ -13,7 +13,9 @@ if(isset($nombre)){
     $query = $con->query("SELECT * FROM clientes WHERE telefono LIKE '%$telefono%'");
 }else if(isset($email)){
     $query = $con->query("SELECT * FROM clientes WHERE email LIKE '%$email%'");
-}
+} else {
+    $query = $con->query("SELECT * FROM clientes");
+} 
 
 
 $temporal = array();

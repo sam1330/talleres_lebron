@@ -13,6 +13,8 @@ if(isset($detalle)){
     $query = $con->query("SELECT * FROM servicio WHERE precio LIKE '%$precio%'");
 }else if(isset($dificultad)){
     $query = $con->query("SELECT * FROM servicio WHERE dificultad LIKE '%$dificultad%'");
+} else {
+    $query = $con->query("SELECT * FROM servicio");
 }
 
 

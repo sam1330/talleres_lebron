@@ -83,7 +83,7 @@
         <p>{{ piece.existencia }}</p>
       </div>
       <div class="col col-lg-1 align-self-center">
-        <p>{{ currencyFormatter(piece.prec_ven) }}</p>
+        <p>{{ currencyFormatter(piece.precio) }}</p>
       </div>
       <div class="col col-lg-2 align-self-center">
         <p>
@@ -187,10 +187,10 @@
                   <div class="form-floating">
                     <input
                       type="number"
-                      name="prec_ven"
+                      name="precio"
                       class="form-control"
                       placeholder="Precio Venta"
-                      v-model="piecesToEdit.prec_ven"
+                      v-model="piecesToEdit.precio"
                     />
                     <label>Precio Venta</label>
                   </div>
@@ -322,7 +322,7 @@
             <div class="row mt-3">
               <div class="col col-lg-6">
                 <h5>Precio de venta</h5>
-                <span class="text-muted">{{ aditionalData.prec_ven }}</span>
+                <span class="text-muted">{{ aditionalData.precio }}</span>
               </div>
               <div class="col col-lg-6">
                 <h5>Proveedor</h5>
@@ -486,7 +486,7 @@ export default {
           piecesToEdit.value.existencia = piece.existencia;
           piecesToEdit.value.nombre = piece.nombre;
           piecesToEdit.value.prec_com = piece.prec_com;
-          piecesToEdit.value.prec_ven = piece.prec_ven;
+          piecesToEdit.value.precio = piece.precio;
           piecesToEdit.value.reorden = piece.reorden;
           piecesToEdit.value.id_prov = piece.id_prov;
           piecesToEdit.value.id_alm = piece.id_alm;
