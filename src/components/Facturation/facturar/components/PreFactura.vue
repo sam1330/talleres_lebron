@@ -63,11 +63,21 @@
       <div class="row my-3 pb-3 border-bottom border-2">
         <div class="col col-lg-3">
           <div class="form-floating">
-            <select class="form-select" name="tipo_fact">
+            <select
+              class="form-select"
+              name="tipo_fact"
+              v-model="createForm.client.tipo_fact"
+            >
               <option value="Contado" selected>Contado</option>
               <option value="Credito">Credito</option>
             </select>
             <label>Tipo de factura</label>
+          </div>
+        </div>
+        <div class="col col-lg-3">
+          <div class="form-floating">
+            <input type="text" :value="numFact" class="form-control" readonly />
+            <label>Factura #</label>
           </div>
         </div>
       </div>
@@ -161,10 +171,12 @@
             class="form-control"
             readonly
           />
-          <label>Sub Total</label>
+          <label>Total</label>
         </div>
         <div class="d-grid mt-3">
-          <button class="btn btn-success"><i class="fas fa-receipt me-2"></i>Facturar</button>
+          <button class="btn btn-success" @click="facturar()">
+            <i class="fas fa-receipt me-2"></i>Facturar
+          </button>
         </div>
       </div>
     </div>
@@ -173,7 +185,7 @@
   </div>
 </template>
 <script>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Products from "./Products.vue";
 import Clients from "./Clients.vue";
 import { baseUrl } from "@/model/main";
@@ -189,21 +201,37 @@ export default {
       vehicle: {},
       products: {},
     });
+    const today = new Date();
+    const date = `${today.getFullYear()}-${
+      today.getMonth() + 1
+    }-${today.getDate()}`;
+    const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+    const fullDate = `${date} ${time}`;
     const vehicles = ref([]);
     const productsTableData = ref([]);
     const selectedVehicle = ref(null);
     const products = ref([]);
     const subTotalProducts = ref(0);
+    const numFact = ref(0);
 
     const subTotalPlus = () => {
       subTotalProducts.value =
         parseFloat(subTotalProducts.value) +
-        (parseFloat(createForm.value.products.precio) * parseFloat(createForm.value.products.cantidad));
+        parseFloat(createForm.value.products.precio) *
+          parseFloat(createForm.value.products.cantidad);
     };
+
+    const getFacturaNumber = () => {
+      const queryUrl = `${baseUrl}facturation/pre-factura/getFacturaNumber.php`;
+      axios.get(queryUrl).then((res) => {
+        numFact.value = parseFloat(res.data[0].id_fac) + 1;
+      });
+    };
+
     const subTotalMinus = (product) => {
       subTotalProducts.value =
         parseFloat(subTotalProducts.value) -
-        (parseFloat(product.precio) * parseFloat(product.cantidad));
+        parseFloat(product.precio) * parseFloat(product.cantidad);
     };
 
     const productName = computed(() => {
@@ -215,7 +243,7 @@ export default {
 
     const deleteTableProduct = (product) => {
       productsTableData.value = productsTableData.value.filter((producto) => {
-        if(product === producto) {
+        if (product === producto) {
           subTotalMinus(producto);
         }
         return producto != product;
@@ -280,7 +308,42 @@ export default {
       });
     };
 
-    
+    const facturar = () => {
+      const formData = {
+        id_comp: 1,
+        id_cli: parseInt(createForm.value.client.id),
+        id_pag: 1,
+        id_emp: 2,
+        tip_fac: createForm.value.client.tipo_fact,
+        placa_vehiculo: selectedVehicle.value,
+        total: subTotalProducts.value,
+        productos: productsTableData.value,
+        fecha: fullDate,
+        num_fact: numFact.value,
+      };
+      const queryUrl = `${baseUrl}facturation/pre-factura/facturate.php`;
+      axios
+        .post(queryUrl, formData)
+        .then((res) => {
+          if (res.data === "success") {
+            Swal.fire({
+              title: "Hurra!!",
+              text: "Pre Factura hecha",
+              icon: "success",
+            });
+          }else {
+            Swal.fire({
+              title: "Uppd!!",
+              text: "Pre Factura no hecha",
+              icon: "error",
+            });
+          }
+        });
+    };
+
+    onMounted(() => {
+      getFacturaNumber();
+    });
 
     return {
       createForm,
@@ -290,6 +353,8 @@ export default {
       products,
       productName,
       subTotalProducts,
+      numFact,
+      facturar,
       subTotalPlus,
       selectedProduct,
       addProduct,
